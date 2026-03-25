@@ -1,0 +1,144 @@
+% ============================================================
+%  Chapter 1 — Introduction
+% ============================================================
+\section{Introduction}
+\label{ch:introduction}
+
+% ── Opening paragraphs — adapt from project plan introduction ──
+The maritime shipping sector is undergoing a fundamental transition driven by
+increasingly stringent environmental regulation. In recent years, regulatory
+focus has shifted from long-term, fleet-level measures towards operational
+performance, thereby directly influencing day-to-day decision-making. A
+prominent example of this shift is the International Maritime Organization's
+Carbon Intensity Indicator (\CII{}), which links a vessel's carbon dioxide
+emissions to its transport work and assigns annual performance ratings based
+on realized operational outcomes \parencite{imo2021cii}.
+
+Unlike earlier regulatory instruments that primarily affected ship design or
+fuel choice, the \CII{} framework directly constrains operational decisions
+such as sailing speed, routing, and cargo acceptance. Consequently, shipping
+operators are required to account for environmental performance already at the
+planning stage, rather than evaluating emissions ex~post. This fundamentally
+alters the nature of operational planning, as economic efficiency and
+environmental compliance become tightly coupled \parencite{psaraftis2013speed}.
+
+These challenges are particularly pronounced in short-sea shipping contexts
+such as the Baltic Sea. The region is characterised by relatively short
+sailing distances, frequent port calls, and flexible cargo patterns, which
+increase the sensitivity of carbon intensity performance to operational
+decisions. In such settings, traditional planning approaches that optimise
+routing, speed, or cargo selection independently may lead to unintended
+trade-offs and increased risk of regulatory non-compliance.
+
+Adding to the \CII{} framework, the European Union extended its Emissions
+Trading System to maritime transport from 2024, with full coverage of verified
+emissions at EU ports applying from 2026 \parencite{eu_ets_shipping}.  The
+\ETS{} attaches a direct financial cost to each tonne of CO$_2$ emitted, thereby
+translating the environmental externality into a voyage cost item.  Together,
+the \IMO{} \CII{} and the EU \ETS{} create a dual regulatory pressure on
+Baltic Sea operators: the former through a reputational and compliance
+mechanism, the latter through a direct cost mechanism.  Integrated operational
+planning models that capture both instruments are therefore of immediate
+practical relevance.
+
+% ── Research gap ──────────────────────────────────────────────
+\subsection{Research Gap}
+\label{sec:intro:gap}
+
+While recent academic literature has begun to address carbon-constrained
+operational planning, there remains limited understanding of how carbon
+intensity regulation affects integrated operational decisions in realistic
+regional shipping networks. In particular, there is a lack of studies that
+jointly consider routing, speed selection, and cargo acceptance under explicit
+\CII{} constraints, and that translate such models into decision-support
+insights relevant for operational planners \parencite{cheng2025cii}.
+
+A further gap concerns the specifics of the \CII{} formula for Roll-on/Roll-off
+(\RoRo{}) vessels. Unlike bulk or container shipping, where transport work is
+measured in tonne-nautical-miles, the \IMO{} \CII{} formula for \RoRo{} vessels
+uses Gross Tonnage (\GT{}) as the capacity measure rather than cargo weight.
+This distinction has significant operational implications: cargo volume has no
+direct effect on a \RoRo{} vessel's \CII{} rating, making speed and distance
+the sole operational levers available to an operator.
+
+% ── Research question ─────────────────────────────────────────
+\subsection{Research Questions}
+\label{sec:intro:rq}
+
+This thesis addresses the identified gap by formulating and applying an
+optimisation-based operational planning model for a short-sea \RoRo{} service
+under \CII{} regulation. The central research question is:
+
+\begin{quote}
+\itshape
+How does carbon intensity regulation reshape integrated routing and speed
+decisions in short-sea shipping, and under what conditions does the
+regulation become operationally binding?
+\end{quote}
+
+The following sub-questions guide the analysis:
+
+\begin{enumerate}
+  \item How should the \CII{} constraint be correctly formulated for a
+    \RoRo{} vessel, and what are the operational implications of common
+    misspecifications?
+  \item Under what schedule and regulatory conditions does \CII{} compliance
+    become infeasible, and what is the minimum structural change required
+    to restore feasibility?
+  \item What is the economic value of schedule flexibility for \CII{}
+    compliance relative to a fixed timetable?
+  \item How do post-2026 regulatory scenarios and \ETS{} carbon pricing
+    interact to affect the cost structure of compliance?
+\end{enumerate}
+
+% ── Scope ─────────────────────────────────────────────────────
+\subsection{Scope and Delimitations}
+\label{sec:intro:scope}
+
+The analysis is conducted within a stylised but operationally grounded
+planning framework designed to capture structural decision
+interdependencies rather than replicate company-internal planning systems.
+The study is restricted to a single-vessel, short-sea shipping context,
+with the Baltic Sea serving as the primary application environment.
+
+The thesis does not address long-term strategic decisions such as fleet
+renewal, vessel design, or fuel technology transitions. Carbon intensity
+regulation is treated as an exogenous constraint under which operational
+decisions are optimised, aligned with common modelling practice in recent
+operational planning studies \parencite{cheng2025cii, psaraftis2013speed}.
+
+% ── Contributions ─────────────────────────────────────────────
+\subsection{Contributions}
+\label{sec:intro:contributions}
+
+The thesis makes the following contributions:
+
+\begin{enumerate}
+  \item A \MILP{} formulation for operational speed optimisation under
+    \CII{} constraints, correctly parameterised for a \RoRo{} vessel
+    including the \GT{}-based capacity measure and ice-class correction
+    factors.
+  \item A case study calibrated to \SCA{}'s M/V Obbola operating on a
+    Baltic Sea loop, validated against EU \MRV{} operational data.
+  \item A structured scenario analysis covering six regulatory and
+    operational settings, including a demonstration of structural
+    infeasibility under 2030 Rating~B targets.
+  \item Quantification of the value of schedule flexibility: by replacing
+    per-arc time budgets with a global cycle-time cap, the vessel reduces
+    fuel consumption by 15.2\,\% (134.7~t per loop, EUR~2.12~million per year)
+    while improving the attained \CII{} from 10.27 to 8.71~\gGTnm{}.
+\end{enumerate}
+
+% ── Thesis outline ────────────────────────────────────────────
+\subsection{Thesis Outline}
+\label{sec:intro:outline}
+
+The remainder of this thesis is structured as follows.
+\Cref{ch:literature} reviews the relevant academic and regulatory
+literature. \Cref{ch:model} develops the mathematical optimisation model.
+\Cref{ch:casestudy} describes the case study vessel and route.
+\Cref{ch:scenarios} defines the scenario design. \Cref{ch:results}
+presents and analyses the computational results. \Cref{ch:discussion}
+discusses the findings, limitations, and managerial implications.
+\Cref{ch:conclusion} concludes and identifies directions for future
+research.

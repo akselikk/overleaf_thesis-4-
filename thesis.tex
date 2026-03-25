@@ -1,0 +1,61 @@
+% ============================================================
+%  Operational Planning under CII Regulation in Baltic Sea Shipping
+%  MSc Thesis — Akseli Kalela — DTU / SCA — 2026
+% ============================================================
+\documentclass[12pt, a4paper, twoside, openright]{report}
+
+\input{preamble/packages}
+\input{preamble/settings}
+\input{preamble/macros}
+
+% ── Bibliography (natbib) ────────────────────────────────────
+% Switch to \addbibresource when biblatex is available
+
+% ============================================================
+\begin{document}
+
+% ── Pre-frontmatter ─────────────────────────────────────────
+\pagenumbering{roman}
+\input{frontmatter/titlepage}
+
+\cleardoublepage
+\input{frontmatter/abstract}
+
+\cleardoublepage
+\input{frontmatter/acknowledgements}
+
+% ── Table of contents / lists ───────────────────────────────
+\cleardoublepage
+\tableofcontents
+
+\cleardoublepage
+\listoffigures
+
+\cleardoublepage
+\listoftables
+
+% ── Main matter ─────────────────────────────────────────────
+\cleardoublepage
+\pagenumbering{arabic}
+
+\input{chapters/01_introduction}
+\input{chapters/02_literature}
+\input{chapters/03_model}
+\input{chapters/04_case_study}
+\input{chapters/05_scenarios}
+\input{chapters/06_results}
+\input{chapters/07_discussion}
+\input{chapters/08_conclusion}
+
+% ── Bibliography ────────────────────────────────────────────
+\cleardoublepage
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{apalike}
+\bibliography{bibliography/references}
+
+% ── Appendices ──────────────────────────────────────────────
+\appendix
+\input{appendices/A_cii_regulation}
+\input{appendices/B_model_notation}
+
+\end{document}

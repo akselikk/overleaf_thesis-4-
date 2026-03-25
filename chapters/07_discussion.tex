@@ -1,0 +1,274 @@
+% ============================================================
+%  Chapter 7 — Discussion
+% ============================================================
+\section{Discussion}
+\label{ch:discussion}
+
+\subsection{Regulatory Implications}
+\label{sec:disc:regulatory}
+
+The results of the six scenarios reveal a nuanced picture of how the
+Carbon Intensity Indicator regulation interacts with the operational reality
+of a fixed-schedule Baltic Sea service.  Three overarching regulatory
+implications emerge.
+
+\paragraph{Schedule dominates CII compliance in the near term.}
+Under the 2026 Rating~C threshold, the published timetable --- not the
+\CII{} constraint --- determines achievable speeds and emissions.  The
+33.9\,\% compliance slack observed in S3 implies that the vessel already
+operates well within the current regulatory ceiling, and that speed
+optimisation alone cannot further reduce emissions without renegotiating
+port windows.  This finding challenges the assumption embedded in much of
+the IMO's slow-steaming policy narrative: that tightening the \CII{}
+target will straightforwardly induce operators to reduce speed.  For
+fixed-schedule short-sea services, the instrument is partially blunt.
+
+\paragraph{The 2030 Rating~B target is structurally unachievable.}
+S4 demonstrates that a 31\,\% reduction in required \CII{} relative to
+the 2008 reference --- corresponding to a Rating~B target of
+9.9291~\gGTnm{} --- cannot be met on the current timetable regardless of
+speed choices.  The minimum achievable \CII{} under the schedule is
+10.3187~\gGTnm{}, a gap of 0.39~\gGTnm{} (3.9\,\%).  This finding has
+direct policy relevance: operators in analogous fixed-schedule trades cannot
+rely on speed management alone to comply with aggressive post-2026 targets.
+The regulatory pathway from Rating~C (2026) to Rating~B (2030) requires
+complementary interventions such as schedule redesign, alternative fuels,
+or energy efficiency measures.
+
+\paragraph{Carbon pricing materially increases voyage cost but does not
+change the optimal speed profile.}
+In S4b, the EU \ETS{} charge (EUR~100/t\,CO$_2$) adds a significant
+surcharge to the voyage cost without altering the optimal speed solution,
+because the schedule --- not the emission cost --- remains binding.  This
+implies that, for fixed-schedule operators, carbon pricing exerts a
+transfer-payment effect (shifting cost from operators to carbon permit
+markets) rather than a behavioural effect (inducing emission reductions
+through speed change).  The emission-reduction channel of EU \ETS{} is
+therefore partially ineffective for this vessel type and service pattern
+under the current timetable.  This is consistent with findings in the
+broader literature on carbon pricing for captive transport routes
+\parencite{kontovas2011}.
+
+\subsection{Value of Schedule Flexibility}
+\label{sec:disc:flexibility}
+
+S5 quantifies the operational and economic benefit of replacing rigid
+per-arc time windows with a global cycle-time cap.  The reduction in
+attained \CII{} from 10.2705~\gGTnm{} (S3) to 8.7116~\gGTnm{} (S5)
+--- a 15.2\,\% improvement --- reflects the ability to operate bottleneck
+arcs at lower speeds when not constrained by individual port windows.
+
+From a managerial perspective, this suggests that \emph{negotiations
+with port authorities and cargo customers over arrival window flexibility
+may yield greater emission reductions than any on-board technological
+investment}.  This insight is particularly actionable for \RoRo{}
+operators whose schedules are customer-driven: modest relaxation of
+port-window tolerances could enable a step-change in \CII{} performance
+without capital expenditure.
+
+The value of flexibility also has implications for the design of future
+\CII{} regulation.  If the IMO or EU were to provide explicit compliance
+incentives for operators who negotiate flexible schedules (analogous to
+the existing \textit{correction factor} mechanism for ice-class
+operations), this could unlock emission reductions in the short-sea
+sector that are currently inaccessible through speed management alone.
+
+\subsection{Fuel Price Sensitivity}
+\label{sec:disc:fuelprice}
+
+HFO prices are highly volatile: in the period 2020--2025 they ranged from
+approximately EUR~300/t to over EUR~900/t, driven by crude oil markets,
+refinery margins, and the IMO~2020 sulphur cap.  This volatility raises
+the question of how sensitive the operational conclusions are to the assumed
+fuel price.
+
+\paragraph{Speed profiles are invariant to fuel price in fixed-schedule scenarios.}
+For scenarios with per-arc time budgets (S3, S4b), the minimum feasible
+speed on each arc is determined solely by the distance--time relationship:
+\begin{equation}
+  v_{ij}^{\min} = \frac{d_{ij}}{B_{ij}}
+  \label{eq:min_speed}
+\end{equation}
+Since the objective function minimises cost (fuel plus carbon) and the
+fuel consumption is strictly increasing in speed, the cost-minimising
+choice is always the minimum feasible speed on each arc, \emph{regardless
+of the fuel price level}.  Changing the fuel price from EUR~400/t to
+EUR~1{,}000/t does not alter any speed decision in S3 or S4b; it only
+rescales the total voyage cost linearly.
+
+This result has a strong policy implication.  The \CII{} regulation is designed
+to induce operators to reduce speed by tightening the carbon intensity ceiling.
+But for fixed-schedule operators, the schedule already forces minimum speeds
+that are sufficient for \CII{} compliance --- and those minimum speeds are
+optimal at any positive fuel price.  The regulatory instrument therefore
+provides no marginal behavioural incentive.  Similarly, fuel price escalation
+provides no additional compliance benefit: the vessel cannot slow further
+than the schedule permits, and it would slow to that minimum anyway on
+economic grounds.
+
+\paragraph{Fuel price sensitivity of total cost.}
+Although speeds are invariant, total voyage cost is sensitive to fuel price.
+\Cref{tab:fuel_sensitivity} reports per-loop costs for S3, S4b, and S5
+at four representative fuel prices, holding the \ETS{} carbon prices at
+their scenario-specific values (EUR~40/t for 2026 scenarios; EUR~100/t
+for S4b).
+
+\begin{table}[h]
+\centering
+\caption{Fuel price sensitivity --- per-loop total cost (EUR)}
+\label{tab:fuel_sensitivity}
+\begin{tabular}{lrrrr}
+  \toprule
+  Scenario & \multicolumn{4}{c}{Fuel price (EUR/t HFO)} \\
+  \cmidrule(lr){2-5}
+  & 400 & 600 & 800 & 1{,}000 \\
+  \midrule
+  S3  (2026, fixed schedule)   & 465{,}639 & 643{,}174 & 820{,}709 & 998{,}245 \\
+  S4b (2030, fixed schedule)   & 631{,}492 & 809{,}028 & 986{,}563 & 1{,}164{,}098 \\
+  S5  (2026, flexible schedule)& 394{,}963 & 545{,}551 & 696{,}140 & 846{,}728 \\
+  \midrule
+  \textit{S5 saving vs.\ S3}   & \textit{70{,}676} & \textit{97{,}623} & \textit{124{,}569} & \textit{151{,}517} \\
+  \bottomrule
+\end{tabular}
+\smallskip\\
+{\footnotesize \ETS{} carbon cost held fixed: S3/S5 at EUR~40/t\,CO$_2$;
+S4b at EUR~100/t\,CO$_2$.  Speed profiles are identical across all fuel
+price levels within each scenario.
+S4b values adjust only for the fuel price component relative to the
+EUR~914/t baseline (CO$_2$ cost is EUR~276{,}422 for all S4b rows).}
+\end{table}
+
+\paragraph{The value of schedule flexibility increases with fuel price.}
+The savings from moving to a flexible schedule (S5 versus S3) grow
+proportionally with the fuel price, because S5 uses 134.7~t less fuel per
+loop.  At EUR~400/t the annual saving is approximately EUR~1.20~million;
+at EUR~1{,}000/t it rises to EUR~2.58~million --- a 2.1$\times$ amplification
+over the same price range (EUR~70{,}676 to EUR~151{,}517 per loop).  This means that the business case for negotiating
+relaxed port windows with cargo customers is strongest precisely when fuel
+markets are expensive and volatile --- the conditions that characterise the
+current market environment.  Operators facing sustained high oil prices should
+therefore prioritise schedule flexibility discussions as the highest-return
+\CII{} and cost management lever available without capital investment.
+
+\subsection{Sensitivity to the Fuel Model}
+\label{sec:disc:fuelmodel}
+
+The thesis relies on the SCA polynomial fuel model, which exhibits a
+local non-monotonicity at 12--13~kn in the light-load condition.  Two
+implications follow.
+
+First, the optimizer may select 12~kn over 13~kn in some scenarios
+because the fuel rate at 12~kn is marginally lower.  In practice, this
+difference is within the uncertainty of the polynomial fit and should not
+be interpreted as a robust speed recommendation.  A sensitivity analysis
+varying the polynomial coefficients would be prudent in future work.
+
+Second, the non-monotonicity means that the fuel consumption curve does
+not satisfy the usual convexity assumption exploited in continuous
+relaxations of speed-optimisation models.  The present formulation
+avoids this issue by discretising the speed set to integer knots and
+solving a \MILP{} directly, but practitioners using derivative-based
+methods should be aware of this feature of the SCA vessel's fuel map.
+
+\subsection{Cargo and Loading Condition}
+\label{sec:disc:cargo}
+
+In the \RoRo{} \CII{} formula, cargo mass does not appear: the denominator
+uses gross tonnage (\GT{}) rather than a transport work metric.  This
+distinguishes the \RoRo{} case sharply from bulk and container shipping,
+where utilisation directly affects the attained \CII{}.
+
+Despite this, cargo loading condition affects the \emph{fuel rate}
+(via the polynomial coefficients), and the per-arc cargo weights
+observed in the EU MRV data vary substantially (light, medium, full).
+The model assigns the mean cargo weight per arc to each scenario; this
+may understate or overstate fuel consumption on individual legs.  A
+stochastic extension treating cargo as a random variable would better
+capture the distributional effects, though it would substantially
+increase model complexity.
+
+It is also worth noting that the effective capacity factor $f_m = 1.05$
+applied in the CII denominator reflects the full-load capacity of the
+vessel.  Under partial loading, the numerator (CO$_2$) decreases while
+the denominator remains fixed, so the CII improves even though the
+vessel is not efficiently loaded.  This is a feature of the regulatory
+formula that may not accurately reflect the social cost of emissions per
+unit of transport work delivered.
+
+\subsection{Assumptions and Limitations}
+\label{sec:disc:limitations}
+
+Several modelling assumptions limit the generalisability of the results.
+
+\paragraph{Post-2026 reduction factors.}
+The 31\,\% reduction factor applied to derive the 2030 required \CII{}
+is a scenario assumption, not a confirmed regulatory figure.  As of the
+thesis writing date, the \IMO{} MEPC has adopted an 11\,\% reduction for
+2026 but has not finalised post-2026 factors.  The 31\,\% assumption is
+informed by the IMO 2023 GHG Strategy's 40\,\% fleet-wide ambition
+\parencite{mepc377}, but the actual factor applicable to this vessel class
+may differ.  If the eventual factor is lower (say, 20\,\%), the S4
+infeasibility gap narrows or disappears; if higher (say, 40\,\%), the
+gap widens and even Rating~C compliance requires schedule interventions.
+
+\paragraph{Single vessel and route.}
+The case study covers a single vessel (M/V Obbola) on a single Baltic
+Sea route operated by \SCA{} Logistics.  The findings may not generalise
+to other \RoRo{} vessels, different route structures, or operators with
+greater schedule flexibility.  The bottleneck arc phenomenon is a
+product of the specific port sequence and SCA's published timetable; a
+vessel with shorter inter-port distances or more generous time windows
+would not exhibit the same infeasibility.
+
+\paragraph{Static voyage cost model.}
+The model treats fuel prices and carbon prices as deterministic
+parameters.  In reality, both are volatile: HFO prices have ranged from
+EUR~400/t to over EUR~700/t in recent years, and EU \ETS{} allowance
+prices have fluctuated between EUR~25/t and EUR~100/t.  A stochastic
+programming extension that models price uncertainty would provide
+more robust operational recommendations.
+
+\paragraph{No technological alternatives.}
+The model optimises speed within the existing vessel and fuel
+configuration.  It does not consider alternative fuels (LNG, methanol,
+ammonia), wind-assist technologies, or energy efficiency modifications
+(hull coatings, propeller optimisation).  These interventions could
+shift the entire \CII{} curve downward, potentially closing the S4
+infeasibility gap.  Modelling the cost-effectiveness of these options
+under the \CII{} regulatory pathway is a natural extension.
+
+\paragraph{No berthing or port-congestion dynamics.}
+The schedule model uses fixed time budgets derived from mean EU MRV
+observations.  It does not model variable port waiting times, berth
+capacity, tidal windows, or weather routing.  Incorporating these
+would require a stochastic schedule model that is beyond the scope
+of this thesis but represents an important direction for future work.
+
+\subsection{Managerial Insights}
+\label{sec:disc:managerial}
+
+For operators of fixed-schedule \RoRo{} services on the Baltic Sea, the
+following actionable insights emerge from this study.
+
+\textbf{Near-term (2026):} \CII{} compliance is not a pressing concern
+under the current regulatory trajectory and timetable.  The primary
+operational lever is schedule adherence, not speed reduction.  No
+significant investment in speed management is warranted until post-2026
+targets are finalised.
+
+\textbf{Medium-term (2030):} If post-2026 reduction factors approach
+the IMO's 40\,\% fleet-wide ambition, even a Rating~C target may require
+schedule renegotiation on bottleneck legs.  Operators should initiate
+dialogue with port authorities and cargo customers now about the
+feasibility of modest arrival-window relaxations.
+
+\textbf{Carbon cost management:} The EU \ETS{} represents a growing
+cost exposure that is not offset by speed reduction on fixed schedules.
+Operators should budget for carbon costs as a fuel-proportional surcharge
+and explore hedging strategies.
+
+\textbf{Data infrastructure:} The validation exercise (S1 vs.\ EU MRV)
+highlights the value of high-quality per-leg fuel consumption data.
+The 1.2\,\% \CII{} error in S1 is acceptable, but improving the accuracy
+of the polynomial fuel model --- particularly for the non-monotonic
+region at 12--13~kn --- would benefit future scenario analyses.

@@ -1,0 +1,144 @@
+% ============================================================
+%  Chapter 8 — Conclusion
+% ============================================================
+\section{Conclusion}
+\label{ch:conclusion}
+
+\subsection{Summary of Findings}
+\label{sec:conc:summary}
+
+This thesis investigated the operational planning problem of a Baltic Sea
+\RoRo{} vessel subject to the IMO Carbon Intensity Indicator (\CII{})
+regulation and EU Emissions Trading System (\ETS{}) carbon pricing.  A
+mixed-integer linear programme (\MILP{}) was formulated to minimise
+voyage cost by optimising discrete speed choices across a multi-arc
+service cycle, subject to per-arc time budgets, a fleet-level \CII{}
+compliance constraint, and the RoRo-specific \CII{} formula based on
+gross tonnage.  Six scenarios were evaluated against the EU MRV dataset
+for M/V Obbola, a purpose-built forest-products \RoRo{} vessel operated
+by \SCA{} Logistics in the Baltic Sea.
+
+Four main findings emerge.
+
+\paragraph{Finding 1: The published schedule, not the CII target, is the
+binding operational constraint under the 2026 regulatory framework.}
+In Scenario S3, the cost-optimal solution achieves a Rating~A \CII{}
+of 10.2705~\gGTnm{} --- 33.9\,\% below the 2026 Rating~C threshold ---
+not because of active \CII{} management but because the time budgets on
+four bottleneck arcs force the vessel to sail at speeds (14--15~kn) that
+already satisfy the regulation with substantial headroom.  Speed reduction
+below these minima is precluded by the schedule.
+
+\paragraph{Finding 2: A 2030 Rating~B CII target is structurally
+infeasible under the current timetable.}
+The analytically derived minimum achievable \CII{} of 10.3187~\gGTnm{}
+exceeds the 2030 Rating~B threshold of 9.9291~\gGTnm{} by 3.9\,\%.
+No combination of speed choices satisfying the published time budgets
+can achieve Rating~B; the infeasibility is structural, arising from
+four specific bottleneck arcs.  This constitutes an original contribution
+of the thesis.
+
+\paragraph{Finding 3: Schedule flexibility yields significant emission
+and cost reductions.}
+Replacing per-arc time budgets with a global cycle-time cap (Scenario S5)
+reduces the attained \CII{} from 10.2705 to 8.7116~\gGTnm{} (a 15.2\,\%
+improvement) and generates meaningful fuel cost savings relative to the
+fixed-schedule optimum.  This quantifies the \emph{value of schedule
+flexibility} and suggests that operator negotiations over port windows are
+a more tractable emission-reduction lever than on-board technology for
+this vessel type.
+
+\paragraph{Finding 4: The RoRo CII formula assigns responsibility
+differently from transport-work-based metrics.}
+By using gross tonnage in the denominator rather than transport work
+(capacity $\times$ distance), the \CII{} formula for \RoRo{} vessels
+is insensitive to cargo utilisation.  This design choice rewards
+operators for reducing fuel consumption per GT-mile but does not provide
+incentives for maximising cargo fill.  The finding has implications
+for how the regulation should be interpreted and potentially reformed
+for the \RoRo{} sector.
+
+\subsection{Contributions}
+\label{sec:conc:contributions}
+
+This thesis makes the following scholarly and practical contributions:
+
+\begin{enumerate}
+  \item A \MILP{} formulation for cost-optimal speed assignment over a
+    multi-arc \RoRo{} service cycle under a linearised \CII{} compliance
+    constraint, extended with a flexible-schedule variant.
+
+  \item An analytical minimum-CII function that derives the lowest
+    structurally achievable \CII{} under a fixed timetable, enabling
+    direct detection of regulatory infeasibility without enumeration.
+
+  \item A documented case study of M/V Obbola on the SCA Baltic Sea
+    route, including model validation against EU MRV reported emissions
+    (1.2\,\% \CII{} error), demonstrating the applicability of the
+    framework to a real short-sea \RoRo{} operation.
+
+  \item The identification of structural \CII{} infeasibility for the
+    2030 Rating~B target on the current SCA timetable, alongside a
+    quantification of the required schedule relaxation or technological
+    improvement needed to close the gap.
+
+  \item A quantification of the value of schedule flexibility, expressed
+    as a reduction in attained \CII{} and voyage fuel cost, providing
+    a tangible metric for schedule-renegotiation decisions.
+\end{enumerate}
+
+\subsection{Limitations and Future Work}
+\label{sec:conc:future}
+
+Several limitations of the present work point to avenues for future
+research.
+
+The most immediately actionable extension is to incorporate stochastic
+cargo weights and fuel prices into the optimisation, replacing the
+deterministic single-value parameters with distributions fitted to
+historical observations.  This would yield robust speed policies that
+hedge against the dominant sources of voyage cost variability.
+
+A second extension concerns the post-2026 reduction factor.  When the
+\IMO{} MEPC adopts confirmed annual reduction factors beyond 2026
+(expected at MEPC 83/84), the scenario set should be re-run to assess
+whether Rating~C targets also become infeasible before 2030, and at
+what reduction level the infeasibility threshold is crossed.
+
+Third, the thesis models a single vessel on a single route.  A
+multi-vessel, multi-route extension --- covering the full SCA fleet
+operating in the Baltic and North Sea --- would allow fleet-level
+\CII{} averaging strategies to be evaluated, which may provide
+compliance flexibility not available at the individual vessel level.
+
+Fourth, the model does not include alternative fuel options.  As the
+regulatory pressure beyond 2030 intensifies and as LNG, methanol, and
+eventually ammonia become commercially available for Baltic Sea
+operators, a comparative techno-economic model incorporating fuel
+switching could identify cost-effective pathways to decarbonisation.
+
+Finally, the non-monotonicity in the SCA fuel polynomial at 12--13~kn
+deserves further investigation.  If confirmable from engine test data,
+it could be exploited operationally; if it is a model artefact, the
+polynomial should be recalibrated with additional sea-trial observations.
+
+\subsection{Closing Remarks}
+\label{sec:conc:closing}
+
+The \CII{} regulation represents the maritime sector's most concrete
+near-term policy instrument for curbing operational emissions.  This
+thesis shows that its interaction with fixed-schedule short-sea services
+is more complex than the regulation's design may suggest: in the near
+term, operators are already compliant largely by accident of their
+timetables; in the medium term, the pathway to stricter targets requires
+not just slower sailing but a renegotiation of the fundamental service
+architecture.
+
+The contribution of rigorous optimisation modelling to this debate is
+not to recommend a single speed profile but to make the constraints
+explicit, to identify where the regulatory and operational systems are
+misaligned, and to quantify the value of actions --- such as schedule
+flexibility --- that might otherwise be overlooked.  It is hoped that
+the framework developed here provides a useful foundation for further
+work on cost-effective decarbonisation in the European short-sea shipping
+sector.

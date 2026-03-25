@@ -1,0 +1,53 @@
+% ============================================================
+%  Document settings  (article class / XeLaTeX)
+% ============================================================
+
+% ── Section title style ─────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily\color{navyBlue}}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}
+  {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\sffamily}
+  {\thesubsubsection}{1em}{}
+
+% ── Headers & footers ───────────────────────────────────────
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Caption style ───────────────────────────────────────────
+\usepackage{caption}
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  labelsep=period,
+  justification=raggedright,
+  singlelinecheck=false
+}
+
+% ── Theorem environments ────────────────────────────────────
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+% ── Lightweight todo commands (no todonotes package needed) ──
+\newcommand{\todowrite}[1]{%
+  \colorbox{todoGreen}{\small\sffamily\textbf{TODO:} #1}}
+\newcommand{\todocite}[1]{%
+  \colorbox{todoOrange}{\small\sffamily\textbf{CITE:} #1}}
+\newcommand{\todocheck}[1]{%
+  \colorbox{todoRed}{\small\sffamily\textbf{CHECK:} #1}}
+
+% ── Cleveref names ──────────────────────────────────────────
+\crefname{equation}{Eq.}{Eqs.}
+\crefname{figure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\crefname{section}{Section}{Sections}
+\crefname{appendix}{Appendix}{Appendices}

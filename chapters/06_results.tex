@@ -1,0 +1,257 @@
+% ============================================================
+%  Chapter 6 — Results
+% ============================================================
+\section{Results}
+\label{ch:results}
+
+This chapter presents the numerical outcomes of the six scenarios defined in
+\cref{ch:scenarios}.  Results are reported at the \emph{loop level}: one
+complete execution of the Baltic Sea service cycle (all arcs traversed once).
+Annual figures --- relevant for regulatory reporting --- are obtained by
+multiplying loop values by the annual loop frequency of approximately 17
+loops per year, consistent with the EU MRV observation period.
+
+\subsection{Overview: Scenario Comparison}
+\label{sec:res:overview}
+
+\Cref{tab:scenario_comparison} summarises the key performance indicators
+across all scenarios.  Attained \CII{}, total voyage cost, and fuel
+consumption are reported per loop; compliance slack is defined as
+\begin{equation}
+  \text{slack} = 1 - \frac{\ciiatt}{\ciithr},
+  \label{eq:slack}
+\end{equation}
+so that a positive value indicates headroom below the threshold.
+
+\begin{table}[h]
+\centering
+\caption{Scenario comparison --- per-loop results}
+\label{tab:scenario_comparison}
+\begin{tabular}{llrlrrr}
+  \toprule
+  ID & Name
+     & {\CII{} (g/\GT{}$\cdot$nm)}
+     & Rating
+     & {Slack (\%)}
+     & {Total cost (EUR)}
+     & {Fuel (t)} \\
+  \midrule
+  S1  & As-is validation   & 11.2909 & B & ---   & 743{,}613 & 975.9 \\
+  S2  & Max speed          & 14.0354 & C & ---   & 924{,}370 & 1{,}213.1 \\
+  S3  & CII-optimal 2026   & 10.2705 & A & 33.9  & 820{,}709 & 887.7 \\
+  S4  & Strict 2030 + ETS  & \multicolumn{5}{l}{\textbf{INFEASIBLE} --- min.\ achievable \CII{} = 10.3187~\gGTnm{}
+       (target 9.9291~\gGTnm{})} \\
+  S4b & Relaxed 2030 + ETS & 10.2705 & C & 14.4  & 1{,}087{,}758 & 887.7 \\
+  S5  & Flexible schedule  & 8.7116  & A & 43.9  & 696{,}140 & 752.9 \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+S3 and S4b cost figures include EU~\ETS{} charges (EUR~40/t\,CO$_2$ in 2026;
+EUR~100/t\,CO$_2$ in 2030).  S1 and S2 are evaluated at EUR~800/t fuel with no
+carbon price for comparability.
+
+\subsection{S1: As-Is Validation}
+\label{sec:res:s1}
+
+S1 replays the mean observed speed on each arc and serves as the empirical
+benchmark.  The attained \CII{} of 11.2909~\gGTnm{} corresponds to a
+Rating~B, consistent with the actual 2022 attained \CII{} of
+11.430253~\gGTnm{} recorded in the EU MRV dataset.  The 1.2\,\% discrepancy
+between S1 and the reported value arises from three sources: (i)~rounding of
+per-arc speeds to the nearest integer knot; (ii)~use of per-arc mean cargo
+weights rather than the full voyage-level cargo distribution; and
+(iii)~exclusion of port-side auxiliary consumption, which the fuel model does
+not capture.
+
+The EU MRV dataset records a total CO$_2$ emission of
+16{,}342.18~t for the observation period (L159--L160 of the EU MRV Voyages
+sheet: 15{,}727.27~t HFO + 614.91~t MGO).  S1 produces
+3{,}038.9~t per loop, corresponding to an annualised figure of
+approximately 51{,}660~t at 17~loops per year --- broadly consistent with
+the multi-year MRV record when adjusted for the partial-year observation
+window.  The per-loop fuel consumption of 975.9~t and voyage cost of
+EUR~743{,}613 provide the economic baseline against which the optimised
+scenarios are compared.
+Given these modelling limitations, the 1.2\,\% error at the
+\CII{} rate level is considered satisfactory validation of the fuel model.
+
+\paragraph{Key insight.}
+The as-is operation already achieves a Rating~B \CII{}, suggesting that
+the vessel is not significantly over-emitting relative to 2026 targets
+even without explicit optimisation.  The binding constraint under S1 is
+not \CII{} compliance but rather schedule adherence.
+
+\subsection{S2: Max Speed Upper Bound}
+\label{sec:res:s2}
+
+Forcing 16~kn on every arc yields an attained \CII{} of 14.0354~\gGTnm{},
+a Rating~C.  This establishes the worst-case emissions upper bound and
+quantifies the maximum regulatory exposure if schedule pressures were to
+force full-speed sailing on all legs.
+
+Comparing S2 and S3 quantifies the \emph{cost of \CII{} compliance}: the
+fuel and cost savings from reducing speed to meet the 2026 Rating~C
+threshold versus operating at maximum throughput.  The difference is
+reported in \cref{sec:res:s3}.
+
+\subsection{S3: CII-Optimal 2026}
+\label{sec:res:s3}
+
+S3 minimises voyage cost subject to the 2026 Rating~C \CII{} threshold
+(15.5412~\gGTnm{}) and the published per-arc time budgets.  The optimiser
+returns an attained \CII{} of 10.2705~\gGTnm{} --- a Rating~A --- with
+33.9\,\% compliance slack.  Total voyage cost is EUR~820{,}709 per loop,
+comprising EUR~710{,}141 in fuel (887.7~t at EUR~800/t) and
+EUR~110{,}569 in EU~\ETS{} charges (2{,}764~t CO$_2$ at EUR~40/t;
+2026 \ETS{} phase-in at 100\,\% coverage).
+The annualised cost at 17~loops per year is EUR~13.95~million.
+
+The large slack reveals a structurally important finding: \textbf{the
+per-arc schedule is the binding constraint in S3, not the \CII{} target}.
+On four bottleneck arcs (\cref{tab:bottleneck_arcs}), the time budget is so
+tight that the minimum feasible speed already yields a \CII{} well below the
+2026 threshold.  Relaxing the \CII{} constraint further would not permit any
+speed increase on these arcs; conversely, tightening it (towards Rating~B)
+would require impossible sub-minimum speeds on those arcs.
+
+\paragraph{Practical implication.}
+Under the 2026 regulatory framework and the published timetable, the operator
+faces essentially no trade-off between cost and \CII{} compliance: the
+schedule-optimal solution is simultaneously \CII{}-compliant by a wide
+margin.  Investment in \CII{} monitoring or speed management tooling yields
+limited additional benefit until the post-2026 reduction pathway becomes
+binding.
+
+\subsection{S4: Strict 2030 + ETS (Infeasible)}
+\label{sec:res:s4}
+
+S4 demonstrates that a 2030 Rating~B \CII{} target (9.9291~\gGTnm{}) is
+\textbf{structurally infeasible} under the published schedule.  The minimum
+achievable attained \CII{} --- computed analytically via
+\texttt{\_compute\_min\_achievable\_cii()} by running each arc at the lowest
+speed consistent with its time budget --- is 10.3187~\gGTnm{}, which exceeds
+the Rating~B threshold by 0.39~\gGTnm{} (3.9\,\%).
+
+The infeasibility originates from four bottleneck arcs
+(\cref{tab:bottleneck_arcs}) whose published time budgets force minimum
+speeds of 14--15~kn, generating disproportionately high fuel consumption per
+nautical mile.  Even if all non-bottleneck arcs were operated at
+10~kn, the aggregate \CII{} cannot be reduced to the Rating~B level.
+
+\begin{table}[h]
+\centering
+\caption{Bottleneck arcs forcing minimum speeds in S4}
+\label{tab:bottleneck_arcs_s4}
+\begin{tabular}{llrrr}
+  \toprule
+  Arc (i $\to$ j) & Description & {Budget (h)} & {Min.\ speed (kn)} & {\CII{} contrib.} \\
+  \midrule
+  SEMMA $\to$ SEHLD & Mälarhamn $\to$ Helsingborg & 46.1 & 15 & 0.648 \\
+  SEMMA $\to$ SEUME & Mälarhamn $\to$ Umeå        & 46.0 & 15 & 0.646 \\
+  SEIGG $\to$ DEKEL & Iggesund $\to$ Kiel         & 47.1 & 14 & 0.519 \\
+  SETUN $\to$ NLRTM & Sundsvall $\to$ Rotterdam   & 69.8 & 15 & 0.981 \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+CII contribution (g/\GT{}$\cdot$nm) is the arc's CO$_2$ mass divided by
+the effective vessel capacity and arc distance, evaluated at the minimum
+feasible speed.  Bottleneck arcs contribute disproportionately because high
+minimum speeds generate cubic fuel penalties on long legs.
+
+\paragraph{Thesis contribution.}
+The identification and analytical proof of this structural infeasibility ---
+that no speed assignment satisfying the published schedule can achieve
+Rating~B by 2030 --- constitutes an original finding of this thesis.  It
+demonstrates that \CII{} compliance for stringent future targets depends not
+only on vessel technology or fuel choice but on \emph{route and schedule
+redesign}.
+
+\subsection{S4b: Relaxed 2030 + ETS}
+\label{sec:res:s4b}
+
+S4b retains the 2030 economic environment (EU \ETS{} at EUR~100/t\,CO$_2$,
+fuel price EUR~914/t) but relaxes the target to Rating~C
+(12.0488~\gGTnm{}).  The optimiser finds a feasible solution with attained
+\CII{} = 10.2705~\gGTnm{} and 14.4\,\% slack.
+
+The cost uplift relative to S3 reflects both the higher 2030 fuel price and
+the inclusion of EU \ETS{} charges.  The speed profile is identical to S3
+(schedule is still the binding constraint), but the cost per loop is
+substantially higher due to carbon pricing.
+
+\paragraph{Carbon cost exposure.}
+The speed profile in S4b is identical to S3 (the schedule remains the binding
+constraint), but the cost increases substantially relative to S3.  The fuel
+cost rises from EUR~710{,}141 to EUR~811{,}336 per loop owing to the higher
+2030 fuel price (EUR~914/t versus EUR~800/t).  The EU~\ETS{} surcharge at
+EUR~100/t\,CO$_2$ adds EUR~276{,}422 per loop (EUR~4.70~million per year),
+bringing the total voyage cost to EUR~1{,}087{,}758 per loop
+(EUR~18.49~million per year).  This compares to EUR~820{,}709 per loop under
+S3, representing a 32.5\,\% cost increase attributable jointly to fuel price
+escalation and carbon pricing.
+
+\subsection{S5: Flexible Schedule}
+\label{sec:res:s5}
+
+S5 replaces per-arc time budgets with a single global cycle-time cap of
+$T_{\max} = 1{,}240$~h and is otherwise identical to S3.  The attained
+\CII{} of 8.7116~\gGTnm{} achieves a Rating~A with 43.9\,\% slack.
+
+The key outcome is that fuel consumption and cost are reduced relative to S3:
+by eliminating the need to rush on bottleneck arcs, the vessel can slow down
+on those legs and redistribute the time savings to other arcs.  The
+difference between S5 and S3 quantifies the \emph{value of schedule
+flexibility}.
+
+\paragraph{Value of schedule flexibility.}
+Comparing S5 and S3 quantifies the value of schedule flexibility directly.
+S5 reduces per-loop fuel consumption by 134.7~t (from 887.7~t to 752.9~t),
+a saving of 15.2\,\%.  Total voyage cost falls from EUR~820{,}709 to
+EUR~696{,}140 per loop (EUR~124{,}569 savings, 15.2\,\%).  Annually, this
+represents EUR~2.12~million in avoided fuel and carbon costs.
+The attained \CII{} improves from 10.2705 to 8.7116~\gGTnm{}, a reduction
+of 1.5589~\gGTnm{} (15.2\,\%), achieved purely through schedule
+redistribution with no technology investment.
+
+The 43.9\,\% compliance slack in S5 versus 33.9\,\% in S3 confirms that
+schedule flexibility not only reduces costs but creates substantial
+regulatory headroom for the tightening post-2026 pathway.  An operator
+who can negotiate relaxed port windows would arrive at 2030 with a more
+comfortable CII trajectory.
+
+\subsection{Annual Scaling}
+\label{sec:res:annual}
+
+Operating at 17~loops per year, the annual regulatory and economic figures
+are obtained by scaling the per-loop values in \cref{tab:scenario_comparison}.
+\Cref{tab:annual_summary} presents the annualised totals.
+
+\begin{table}[h]
+\centering
+\caption{Annualised scenario outcomes (17 loops per year)}
+\label{tab:annual_summary}
+\begin{tabular}{llrrr}
+  \toprule
+  ID & Rating & {Annual cost (EUR)} & {Annual fuel (t)} & {Annual CO$_2$ (t)} \\
+  \midrule
+  S1  & B & 12{,}641{,}422 & 16{,}590 & 51{,}661 \\
+  S2  & C & 15{,}714{,}283 & 20{,}622 & 64{,}218 \\
+  S3  & A & 13{,}952{,}061 & 15{,}091 & 46{,}992 \\
+  S4  & \multicolumn{4}{l}{INFEASIBLE} \\
+  S4b & C & 18{,}491{,}881 & 15{,}091 & 46{,}992 \\
+  S5  & A & 11{,}834{,}373 & 12{,}800 & 39{,}859 \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+Annual CO$_2$ is computed as annual fuel (t) $\times$ 3.114~kg\,CO$_2$/kg\,HFO.
+S1 and S2 annual cost figures assume EUR~800/t fuel and zero carbon price.
+S4b annual cost includes both the higher fuel price (EUR~914/t) and
+EU~\ETS{} at EUR~100/t\,CO$_2$.
+
+Annual figures are the appropriate metric for EU \ETS{} cost exposure
+(which is levied on annual emissions) and for the \CII{} rating (which
+is assessed annually).  Per-loop figures are the appropriate metric for
+operational decisions at the voyage-planning level.

@@ -1,0 +1,149 @@
+% ============================================================
+%  Chapter 5 — Scenario Design
+% ============================================================
+\section{Scenario Design}
+\label{ch:scenarios}
+
+Six scenarios are defined to systematically explore the effect of
+regulatory stringency, carbon pricing, and schedule flexibility on
+optimal vessel operation. \Cref{tab:scenarios_overview} provides
+a consolidated overview; the following sections describe each scenario's
+rationale and parameter settings.
+
+\begin{table}[h]
+\centering
+\caption{Scenario overview}
+\label{tab:scenarios_overview}
+\begin{tabular}{llllp{4.5cm}}
+  \toprule
+  ID & Name & Year & CII target & Key feature \\
+  \midrule
+  S1  & As-is validation     & 2022 & ---    & Replays observed speeds; no optimisation \\
+  S2  & Max speed            & 2026 & ---    & All arcs at 16~kn; upper-bound emissions \\
+  S3  & CII-optimal 2026     & 2026 & Rating C & Min-cost under 2026C threshold; fixed schedule \\
+  S4  & Strict 2030 + ETS    & 2030 & Rating B & 2030B threshold + EUR 100/t\,CO$_2$; \textbf{infeasible} \\
+  S4b & Relaxed 2030 + ETS   & 2030 & Rating C & As S4 but Rating C threshold; feasible \\
+  S5  & Flexible schedule    & 2026 & Rating C & As S3 but global cycle-time cap replaces per-arc budgets \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+% ── 5.1 S1 — As-is validation ─────────────────────────────────
+\subsection{S1: As-Is Validation}
+\label{sec:scen:s1}
+
+S1 replays the mean observed speed on each arc from the EU \MRV{}
+dataset. No optimisation is performed; speeds are rounded to the nearest
+integer knot and clamped to the model speed range $[10,16]$~kn. S1
+serves two purposes: it validates the fuel model against reported
+emissions (\cref{sec:case:validation}), and it establishes a
+benchmark representing the vessel's historical operation.
+
+% ── 5.2 S2 — Max speed ────────────────────────────────────────
+\subsection{S2: Max Speed}
+\label{sec:scen:s2}
+
+S2 forces 16~kn on every arc, representing the worst-case emissions
+scenario and providing an upper bound on fuel consumption and \CII{}. It
+is not subject to any \CII{} constraint and requires no optimisation.
+Comparison with S3 quantifies the cost of \CII{} compliance under the
+2026 regulation.
+
+% ── 5.3 S3 — CII-optimal 2026 ─────────────────────────────────
+\subsection{S3: CII-Optimal 2026}
+\label{sec:scen:s3}
+
+S3 minimises total voyage cost subject to the 2026 Rating~C \CII{}
+threshold (15.54~\gGTnm{}) and the published per-arc time budgets. No
+\ETS{} carbon cost is included. This scenario models the minimum-cost
+operation the vessel must adopt to maintain compliance with the current
+regulatory trajectory.
+
+\paragraph{Parameter values.}
+\begin{itemize}
+  \item Fuel price: EUR~800/t (2026 indicative HFO value).
+  \item CO$_2$ price: EUR~40/t (EU \ETS{} at full 100\,\% coverage from 2026,
+        assumed EUA price EUR~40/t in the near-term trajectory).
+  \item \CII{} threshold: 15.54~\gGTnm{} (Rating C, 2026).
+\end{itemize}
+
+% ── 5.4 S4 — Strict 2030 + ETS ───────────────────────────────
+\subsection{S4: Strict 2030 + ETS}
+\label{sec:scen:s4}
+
+S4 combines a 2030 Rating~B \CII{} threshold (9.93~\gGTnm{}, assuming
+a 31\% reduction factor) with EU \ETS{} carbon pricing at
+EUR~100/t\,CO$_2$. This scenario represents a stringent
+\textit{aspirational} 2030 regulatory environment.
+
+S4 is \textbf{infeasible}: the published schedule forces minimum
+speeds on four arcs (\cref{tab:bottleneck_arcs}) that collectively
+produce an aggregate attained \CII{} of 10.32~\gGTnm{} --- above
+the 9.93~\gGTnm{} target. The infeasibility is structural: no
+combination of speed choices satisfying the time budgets can achieve
+Rating~B. This finding is reported as a thesis contribution.
+
+The minimum achievable attained \CII{} under the published schedule is
+computed analytically by the \texttt{\_compute\_min\_achievable\_cii()}
+function: for each arc, the lowest integer-knot speed satisfying the time
+budget is selected, fuel consumption is evaluated at that speed, and the
+resulting aggregate CO$_2$ is divided by the effective capacity--distance
+product.  The function returns 10.3187~\gGTnm{} for the base instance
+(22 arcs, $n \geq 2$ filter, mean cargo), confirming the infeasibility
+of S4 without any reliance on Gurobi.
+
+% ── 5.5 S4b — Relaxed 2030 + ETS ────────────────────────────
+\subsection{S4b: Relaxed 2030 + ETS}
+\label{sec:scen:s4b}
+
+S4b retains the 2030 economic conditions (EU \ETS{} at EUR~100/t,
+fuel price EUR~914/t to reflect 2030 market estimates) but relaxes the
+\CII{} target to Rating~C (12.05~\gGTnm{}). This scenario is feasible
+with 14.4\% slack and represents the cost-optimal 2030 operation
+when the vessel settles for Rating~C rather than Rating~B.
+
+\paragraph{Regulatory note.}
+Post-2026 reduction factors have not been formally adopted at the time
+of writing. The 31\% reduction assumed here is a scenario assumption
+based on the \IMO{} 2023 GHG Strategy's 40\% fleet-wide ambition
+\parencite{mepc377} and the confirmed 11\% reduction for 2026.
+Actual post-2026 factors may differ.
+
+% ── 5.6 S5 — Flexible schedule ───────────────────────────────
+\subsection{S5: Flexible Schedule}
+\label{sec:scen:s5}
+
+S5 relaxes the per-arc time budgets and replaces them with a single
+global cycle-time cap $T_{\max} = 1{,}240$~h. All other parameters
+are identical to S3. This scenario quantifies the operational and
+economic value of schedule flexibility: by allowing the vessel to
+redistribute sailing time across legs, it can operate at lower speeds
+on tight-budget arcs while still completing the cycle on time.
+
+\paragraph{Comparison with S3.}
+The difference between S5 and S3 directly quantifies the \textit{value
+of schedule flexibility}: the additional fuel and cost savings achievable
+if the operator negotiates relaxed port windows, compared to operating
+within the published fixed timetable.
+
+% ── 5.7 Scenario parameter summary ───────────────────────────
+\subsection{Scenario Parameter Summary}
+\label{sec:scen:params}
+
+\begin{table}[h]
+\centering
+\caption{Scenario economic and regulatory parameters}
+\label{tab:scen_params}
+\begin{tabular}{lrrrlr}
+  \toprule
+  ID & {Fuel (EUR/t)} & {CO$_2$ (EUR/t)} & {\CII{} threshold} & Schedule & {Cycle cap (h)} \\
+  \midrule
+  S1  & 800  & 0   & ---     & Observed speeds & --- \\
+  S2  & 800  & 0   & ---     & 16 kn fixed     & --- \\
+  S3  & 800  & 40  & 15.5412 & Per-arc budget  & --- \\
+  S4  & 914  & 100 & 9.9291  & Per-arc budget  & --- \\
+  S4b & 914  & 100 & 12.0488 & Per-arc budget  & --- \\
+  S5  & 800  & 40  & 15.5412 & Global cap      & 1240 \\
+  \bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,51 @@
+% ============================================================
+%  Abstract
+% ============================================================
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+The International Maritime Organization's Carbon Intensity Indicator (\CII{})
+framework, in force from 2023, assigns annual environmental ratings to vessels
+based on the ratio of CO$_2$ emissions to a transport work proxy.  For
+Roll-on/Roll-off (\RoRo{}) vessels, the denominator uses Gross Tonnage (\GT{})
+rather than cargo weight, making speed and sailing distance the sole operational
+levers available to an operator.
+
+This thesis develops a Mixed-Integer Linear Programming (\MILP{}) formulation
+for joint speed optimisation under \CII{} constraints, calibrated to the Baltic
+Sea \RoRo{} service operated by SCA Logistics (M/V~Obbola, GT~19{,}918).
+The model is validated against EU MRV operational data (153 voyage legs,
+December 2021 -- August 2022), reproducing the audited attained \CII{} to within
+1.2\,\%.  Six scenarios are analysed spanning current regulation (2026 Rating~C),
+a stringent 2030 target (Rating~B), combined EU Emissions Trading System (\ETS{})
+carbon pricing, and schedule flexibility.
+
+The principal findings are threefold.  First, under the 2026 regulatory
+framework, the published vessel timetable --- not the \CII{} target --- is the
+binding constraint: the cost-optimal schedule yields an attained \CII{} of
+10.27~g/\GT{}$\cdot$nm (Rating~A) with 33.9\,\% headroom below the C~boundary.
+Speed optimisation tools provide limited near-term benefit; the regulatory
+instrument is partially blunt for fixed-schedule short-sea services.  Second,
+a 2030 Rating~B target (9.93~g/\GT{}$\cdot$nm, assuming a 31\,\% reduction
+factor) is \emph{structurally infeasible} under the current timetable: four
+bottleneck arcs with tight schedule windows force minimum speeds that together
+produce an irreducible attained \CII{} of 10.32~g/\GT{}$\cdot$nm.  Achieving
+Rating~B by 2030 requires schedule redesign, alternative fuels, or energy
+efficiency investments --- speed management alone is insufficient.  Third,
+replacing per-arc time budgets with a global cycle-time cap (scenario S5)
+reduces per-loop fuel consumption by 15.2\,\% (134.7~t) and total voyage cost
+by EUR~124{,}569 per loop (EUR~2.12~million per year), while further improving
+the \CII{} rating to 8.71~g/\GT{}$\cdot$nm (Rating~A, 43.9\,\% slack).  The
+monetised value of schedule flexibility is thus substantial and easily
+justifiable against the cost of renegotiating port windows.
+
+The thesis contributes a correctly specified \RoRo{} \CII{} formulation (using
+\GT{}-based capacity and RoRo-specific rating multipliers from MEPC.339(76)),
+a systematic infeasibility proof for the 2030 Rating~B target, and
+scenario-based quantification of the economic and environmental trade-offs
+facing Baltic Sea short-sea operators under evolving carbon regulation.
+
+\medskip
+\noindent\textbf{Keywords:} Carbon Intensity Indicator, maritime operations,
+speed optimisation, short-sea shipping, mixed-integer linear programming,
+Roll-on/Roll-off, Baltic Sea, EU ETS.

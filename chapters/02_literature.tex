@@ -1,0 +1,242 @@
+% ============================================================
+%  Chapter 2 — Literature Review
+% ============================================================
+\section{Literature Review}
+\label{ch:literature}
+
+This chapter reviews the academic and regulatory literature relevant to the
+thesis. \Cref{sec:lit:reg} covers the \IMO{} \CII{} regulatory framework and
+the EU emissions trading system. \Cref{sec:lit:speed} reviews the speed
+optimisation literature. \Cref{sec:lit:constrained} addresses
+carbon-constrained operational planning models. \Cref{sec:lit:shortsea}
+discusses the characteristics of short-sea and \RoRo{} shipping relevant
+to this study. \Cref{sec:lit:gap} summarises the research gap.
+
+% ── 2.1 Regulatory framework ──────────────────────────────────
+\subsection{IMO Carbon Intensity Regulation}
+\label{sec:lit:reg}
+
+\subsubsection{Overview of the CII Framework}
+\label{sec:lit:cii_overview}
+
+The \CII{} framework was introduced through \IMO{} resolution
+MEPC.336(76) \parencite{mepc336} and entered into force on 1~January 2023.
+The framework requires each vessel to compute an \textit{attained \CII{}}
+as the ratio of annual CO$_2$ emissions to a transport work proxy, compare
+it against a year-specific \textit{required \CII{}}, and receive a letter
+rating from A (best) to E (worst).  The required \CII{} for each year is
+obtained by applying a reduction factor to a vessel-type-specific reference
+line; the mandatory factors increase annually --- 5\,\% in 2023, 7\,\% in
+2024, 9\,\% in 2025, and 11\,\% in 2026 --- thereby tightening the standard
+each year.  Vessels receiving D or E ratings must submit corrective action
+plans to their flag state; persistent D or E performance can trigger port
+state control inspections and commercial consequences.
+
+\subsubsection{CII Formula for RoRo Vessels}
+\label{sec:lit:cii_roro}
+
+The capacity measure used in the \CII{} denominator differs by ship type.
+For most vessel types --- including bulk carriers and container ships ---
+transport work is expressed as deadweight tonnage times nautical miles
+sailed. For \RoRo{} vessels, however, the \IMO{} specifies Gross Tonnage
+(\GT{}) as the capacity measure \parencite{mepc336, mepc339}. The attained
+\CII{} for a \RoRo{} vessel is therefore:
+
+\begin{equation}
+  \ciiatt
+  = \frac{\sum_k m^{\mathrm{CO}_2}_k}
+         {f_i \cdot f_m \cdot \GT \cdot D}
+  \label{eq:cii_roro}
+\end{equation}
+
+\noindent where $m^{\mathrm{CO}_2}_k$ is the mass of CO$_2$ emitted by
+fuel type $k$, $\GT{}$ is the vessel's gross tonnage, $D$ is the total
+distance sailed in nautical miles, and $f_i$, $f_m$ are correction factors
+for ice class and capacity, respectively \parencite{mepc336}. The critical
+implication of \cref{eq:cii_roro} is that cargo volume does not appear in
+the denominator: \textit{a \RoRo{} vessel's \CII{} rating is independent
+of how much cargo it carries.} Speed and distance are therefore the only
+operational levers available to the operator.
+
+\subsubsection{Rating Boundaries}
+\label{sec:lit:boundaries}
+
+\IMO{} resolution MEPC.339(76) specifies vessel-type-specific rating
+boundary multipliers $d_1 < d_2 < d_3 < d_4$, such that a vessel receives
+rating A if $\ciiatt < d_1 \cdot \ciireq$, rating B if
+$d_1 \leq \ciiatt < d_2 \cdot \ciireq$, and so forth
+\parencite{mepc339}. For \RoRo{} vessels, the boundaries are:
+$d_1 = 0.76$, $d_2 = 0.89$, $d_3 = 1.08$, $d_4 = 1.27$.
+
+It is important to note that the RoRo-specific boundary multipliers
+($d_1=0.76$, $d_2=0.89$, $d_3=1.08$, $d_4=1.27$) differ significantly from
+the generic values occasionally cited in the literature
+(0.82\,/\,0.94\,/\,1.06\,/\,1.18).  Using the generic rather than the
+vessel-type-specific boundaries would incorrectly assign letter ratings: for
+the vessel in this study, the difference between correct and incorrect
+boundaries shifts the Rating~A/B threshold from 10.94 to 11.78~\gGTnm{} ---
+a non-trivial difference at the margins.  This thesis uses the RoRo-specific
+multipliers throughout, consistent with MEPC.339(76) \parencite{mepc339}.
+
+\subsubsection{Post-2026 Regulatory Trajectory}
+\label{sec:lit:post2026}
+
+Reduction factors beyond 2026 have not yet been formally adopted.
+\IMO{} resolution MEPC.377(80) establishes a fleet-wide ambition of at
+least 40\% reduction in GHG intensity by 2030 relative to 2008
+\parencite{mepc377}. The precise annual per-vessel reduction factors for
+2027--2030 are subject to review at MEPC~83 and~84 (2025--2026).
+For this thesis, a 31\% per-vessel reduction by 2030 is assumed as a
+representative intermediate scenario, acknowledging that the actual
+outcome remains uncertain.
+
+\subsubsection{EU Emissions Trading System}
+\label{sec:lit:ets}
+
+The European Union extended its Emissions Trading System (\ETS{}) to the
+maritime sector from 1~January 2024, applying to all vessels of 5{,}000~GT
+and above calling at EU ports \parencite{eu_ets_shipping}.  The phase-in
+schedule is graduated: 40\,\% of verified emissions were covered by \ETS{}
+in 2024, rising to 70\,\% in 2025 and 100\,\% from 2026 onwards.  Operators
+must surrender EU Allowances (EUAs) corresponding to their covered emissions;
+the EUA price is determined by the EU carbon market.  Historical EUA prices
+have ranged from EUR~25 to EUR~100 per tonne of CO$_2$, with market
+projections suggesting prices in the EUR~80--120/t range by 2030
+\parencite{eu_ets_shipping}.
+
+The EU \ETS{} and the \IMO{} \CII{} framework create a dual regulatory
+pressure on Baltic Sea operators.  The \CII{} framework constrains the carbon
+intensity of operations through a rating mechanism, while the \ETS{} attaches
+a direct financial cost to every tonne of CO$_2$ emitted.  Both instruments
+incentivise speed reduction, but they operate through different channels: \CII{}
+through the risk of regulatory non-compliance, and \ETS{} through the voyage
+cost function.  An operator facing high EUA prices and a tight \CII{} target
+simultaneously faces compounding cost pressures that cannot be separated in
+operational planning.  This interaction motivates the inclusion of an \ETS{}
+cost term in the objective function of the present model (Scenarios S4 and S4b).
+
+% ── 2.2 Speed optimisation ────────────────────────────────────
+\subsection{Speed Optimisation in Maritime Shipping}
+\label{sec:lit:speed}
+
+Speed optimisation --- often called \textit{slow steaming} when speeds
+are reduced below design --- is one of the most extensively studied
+operational levers in maritime logistics
+\parencite{psaraftis2013speed, ronen1982ship}.
+The fundamental relationship is that fuel consumption scales
+approximately as the cube of sailing speed:
+
+\begin{equation}
+  f(v) \approx \alpha v^3
+  \label{eq:cubic_fuel}
+\end{equation}
+
+\noindent making speed reduction highly effective for emissions abatement.
+\textcite{psaraftis2013speed} provide a comprehensive survey of speed
+optimisation models and identify the trade-off between fuel savings and
+transit time as the central economic tension.
+
+The interaction between speed and regulatory constraints introduces important
+complications.  In deep-sea tramp shipping, where schedule flexibility is
+high, the cubic relationship \cref{eq:cubic_fuel} provides strong incentives
+for slow steaming under both fuel cost and carbon intensity pressure
+\parencite{PsaraftisKontovas2013SpeedModels}.  However, in fixed-schedule
+liner services --- particularly short-sea services with tight port windows ---
+the operator's ability to reduce speed is constrained by timetable commitments.
+\textcite{ronen1982ship} identified this tension early, noting that the
+optimal speed in a fixed-schedule context may be dictated by the schedule
+rather than by cost minimisation.
+
+Recent literature has begun to address \CII{}-aware speed optimisation
+explicitly.  \textcite{cheng2025cii} demonstrate that treating the \CII{}
+constraint as an ex-post metric rather than an operational constraint leads
+to systematically suboptimal decisions.  \textcite{GolsefidiSharifiGhader2025WeatherSpeedFuel}
+extend the speed optimisation problem to include weather uncertainty and
+time-varying fuel quality, highlighting that the cubic approximation
+\cref{eq:cubic_fuel} may require calibration for specific vessel types.
+In the short-sea \RoRo{} context analysed in this thesis, the published
+schedule places binding lower bounds on arc-level speeds, fundamentally
+altering the feasible region of the speed optimisation problem.
+
+% ── 2.3 Carbon-constrained planning ───────────────────────────
+\subsection{Carbon-Constrained Operational Planning}
+\label{sec:lit:constrained}
+
+\textcite{cheng2025cii} develop a \MILP{} formulation for joint routing,
+speed selection, and cargo acceptance under \CII{} constraints,
+demonstrating that integrating the regulatory constraint into the
+optimisation problem yields substantially different decisions compared
+to treating \CII{} as an ex-post performance metric. Their formulation
+serves as the methodological starting point for this thesis.  A key feature
+of \textcite{cheng2025cii} is the linearisation of the cubic fuel function
+via a speed grid, which makes the problem tractable for commercial \MILP{}
+solvers while preserving the essential non-linearity of fuel cost.  Their
+case study focuses on a tramp shipping context with flexible routing, where
+the binding constraint is the \CII{} target rather than a schedule.
+
+\textcite{GuWangIris2025AllianceUncertainFuel} address the related problem of
+alliance planning under fuel uncertainty, demonstrating that the interaction
+between fuel price volatility and carbon pricing materially affects optimal
+fleet deployment.  While their focus is on container shipping, the insight that
+\ETS{} costs and fuel costs co-determine optimal speeds is directly relevant
+to the present analysis.
+
+\textcite{GolsefidiSharifiGhader2025WeatherSpeedFuel} consider weather-dependent
+speed and fuel consumption, showing that ignoring environmental variability can
+lead to significant ex-post \CII{} violations.  Their findings motivate careful
+calibration of the fuel model to the specific operating environment, as is done
+in this thesis using EU \MRV{} data for the Baltic Sea route.
+
+Across this body of work, the \CII{} constraint is typically modelled as a hard
+annual constraint on the ratio of total CO$_2$ to total transport work.  The
+present thesis adopts this approach but adds the dimension of schedule
+feasibility, showing that the published timetable --- rather than the \CII{}
+limit --- can be the operative binding constraint.
+
+% ── 2.4 Short-sea and RoRo shipping ───────────────────────────
+\subsection{Short-Sea and RoRo Shipping}
+\label{sec:lit:shortsea}
+
+Short-sea shipping --- typically defined as maritime transport not crossing
+oceanic boundaries --- plays a critical role in European freight logistics,
+with the Baltic Sea among the most active short-sea regions.  Baltic Sea
+\RoRo{} services are characterised by high port call frequency (often daily
+or bi-daily arrivals at multiple ports), relatively short individual legs
+(200--1{,}200~nm), and fixed published timetables agreed with cargo shippers.
+These structural features distinguish Baltic Sea operations from the deep-sea
+trades studied in most of the maritime optimisation literature
+\parencite{psaraftis2013speed}.
+
+In the \CII{} context, \RoRo{} vessels face a distinctive regulatory
+environment because the \IMO{} formula uses \GT{} --- a measure of enclosed
+vessel volume --- rather than cargo weight or tonne-nautical-miles
+\parencite{mepc336, mepc339}.  This means that loading heavier or more cargo
+does not improve the \CII{} denominator, and conversely, operating with empty
+lanes generates the same \CII{} numerator as a fully loaded voyage (given the
+same speed and distance).  Speed and distance are therefore the only levers
+available to the operator, making the schedule constraints particularly
+consequential.
+
+Ice conditions in the Baltic Sea add further complexity during winter months.
+Ice class designations (such as the 1A classification of M/V~Obbola) attract
+a correction factor $f_i$ in the \CII{} formula \parencite{mepc336}, partially
+offsetting the emissions attributed to ice navigation.  The case study in this
+thesis uses the confirmed ice-class factor for M/V~Obbola ($f_i = 1.00$, as
+the vessel's ice class provides no correction under current \IMO{} rules for
+this vessel category) and does not model seasonal speed variation, focusing
+instead on the structural schedule constraints that bind year-round.
+
+% ── 2.5 Research gap ──────────────────────────────────────────
+\subsection{Summary and Research Gap}
+\label{sec:lit:gap}
+
+The reviewed literature demonstrates growing attention to
+carbon-constrained operational planning, yet several gaps remain.
+First, existing models predominantly focus on deep-sea or container
+shipping; the short-sea \RoRo{} context has received limited attention.
+Second, the \GT{}-based \CII{} formula for \RoRo{} vessels is rarely
+discussed, and its implication --- that cargo has no direct effect on
+\CII{} --- is not reflected in most operational models. Third, the
+interaction between fixed port schedules and \CII{} feasibility has not
+been systematically analysed. This thesis addresses these gaps through
+a model and case study calibrated to Baltic Sea \RoRo{} operations.

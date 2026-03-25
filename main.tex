@@ -1,0 +1,59 @@
+% !TEX program = xelatex
+% ============================================================
+%  Operational Planning under Carbon Intensity Indicator
+%  Regulation in Baltic Sea Shipping
+%  MSc Thesis — Akseli Kalela (s251511) — DTU / SCA — 2026
+% ============================================================
+\documentclass[12pt,a4paper]{article}
+
+\input{preamble/packages}
+\addbibresource{bibliography/references.bib}
+\input{preamble/settings}
+\input{preamble/macros}
+
+% ── DTU title-page metadata ─────────────────────────────────
+\newcommand{\thesistypeabbr}{M.Sc.}
+\newcommand{\thesistype}{Master of Science in Engineering}
+\newcommand{\thesisauthor}{Akseli Kalela -- s251511}
+\newcommand{\thesistitle}{Operational Planning under Carbon Intensity Indicator Regulation in Baltic Sea Shipping}
+\newcommand{\thesissubtitle}{MSc Thesis}
+\newcommand{\thesislocation}{Kongens Lyngby}
+\newcommand{\thesissupervisorname}{Fabricio Oliveira}
+\newcommand{\thesissupervisortitle}{Associate Professor, Department of Technology, Management and Economics}
+\newcommand{\thesisdate}{2026}
+
+% ============================================================
+\begin{document}
+
+% ── Title page ──────────────────────────────────────────────
+\input{frontmatter/titlepage}
+\newpage
+
+% ── Abstract ────────────────────────────────────────────────
+\input{frontmatter/abstract}
+\newpage
+
+% ── Table of contents ───────────────────────────────────────
+\tableofcontents
+\newpage
+
+% ── Main content ────────────────────────────────────────────
+\input{chapters/01_introduction}
+\input{chapters/02_literature}
+\input{chapters/03_model}
+\input{chapters/04_case_study}
+\input{chapters/05_scenarios}
+\input{chapters/06_results}
+\input{chapters/07_discussion}
+\input{chapters/08_conclusion}
+
+% ── Bibliography ────────────────────────────────────────────
+\newpage
+\printbibliography[heading=bibintoc, title={References}]
+
+% ── Appendices ──────────────────────────────────────────────
+\appendix
+\input{appendices/A_cii_regulation}
+\input{appendices/B_model_notation}
+
+\end{document}

@@ -1,0 +1,84 @@
+% ============================================================
+%  Package imports  (XeLaTeX + Overleaf — lightweight build)
+% ============================================================
+
+% ── Pass xcolor options before any package loads it ─────────
+\PassOptionsToPackage{dvipsnames, table}{xcolor}
+
+% ── Page geometry ───────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+
+% ── Language ────────────────────────────────────────────────
+\usepackage[english]{babel}
+
+% ── Fonts (XeLaTeX: fontspec) ────────────────────────────────
+\usepackage{fontspec}
+\setsansfont[
+    Ligatures=TeX,
+    Extension=.otf,
+    UprightFont=*-regular,
+    BoldFont=*-bold,
+    ItalicFont=*-italic,
+    BoldItalicFont=*-bolditalic,
+    Scale=0.9
+]{texgyreadventor}
+
+% ── Spacing ─────────────────────────────────────────────────
+\usepackage{setspace}
+\onehalfspacing
+
+% ── Needed for adjustwidth (used in titlepage) ───────────────
+\usepackage{changepage}
+
+% ── Mathematics ─────────────────────────────────────────────
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+% ── Tables ──────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{siunitx}
+
+% ── Figures ─────────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+
+% ── Colours ─────────────────────────────────────────────────
+\definecolor{dtuRed}{RGB}{153,0,0}
+\definecolor{scaGreen}{RGB}{0,120,60}
+\definecolor{navyBlue}{RGB}{0,47,108}
+\definecolor{lightGray}{RGB}{240,240,240}
+\definecolor{todoGreen}{RGB}{180,230,180}
+\definecolor{todoOrange}{RGB}{255,210,150}
+\definecolor{todoRed}{RGB}{255,180,180}
+
+% ── Headers & footers ───────────────────────────────────────
+\usepackage{fancyhdr}
+
+% ── Euro symbol ─────────────────────────────────────────────
+\usepackage{eurosym}
+
+% ── Bibliography: biblatex + biber (Overleaf Premium — no timeout) ──
+\usepackage[
+    backend=biber,
+    style=authoryear,
+    sorting=nyt,
+    maxnames=2,
+    minnames=1,
+    uniquelist=false,
+    giveninits=true,
+    dashed=false,
+    natbib=true,        % keeps \citep / \citet working in case any stray uses remain
+]{biblatex}
+
+% ── Hyperlinks ──────────────────────────────────────────────
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+
+% ── Miscellaneous ───────────────────────────────────────────
+\usepackage{enumitem}
+\usepackage{csquotes}

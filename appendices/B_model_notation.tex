@@ -1,0 +1,129 @@
+% ============================================================
+%  Appendix B — Model Notation
+% ============================================================
+\section{Model Notation}
+\label{app:notation}
+
+\subsection{Sets and Indices}
+\label{app:notation:sets}
+
+\begin{table}[h]
+\centering
+\caption{Sets used in the MILP model}
+\label{tab:notation_sets}
+\begin{tabular}{lp{9cm}}
+  \toprule
+  Symbol & Definition \\
+  \midrule
+  $\setN$ & Set of port nodes $i \in \{1, \ldots, |\setN|\}$ \\
+  $\setA$ & Set of directed arcs $(i,j)$ representing inter-port legs \\
+  $\setV$ & Set of discrete speed levels $v \in \{10, 11, \ldots, 16\}$~kn \\
+  $\setS$ & Set of scenarios \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Decision Variables}
+\label{app:notation:vars}
+
+\begin{table}[h]
+\centering
+\caption{Decision variables}
+\label{tab:notation_vars}
+\begin{tabular}{lp{9cm}}
+  \toprule
+  Symbol & Definition \\
+  \midrule
+  $x_{ij,v} \in \{0,1\}$ & 1 if arc $(i,j)$ is traversed at speed $v$, 0 otherwise \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Parameters}
+\label{app:notation:params}
+
+\begin{table}[h]
+\centering
+\caption{Model parameters}
+\label{tab:notation_params}
+\begin{tabular}{lp{9cm}}
+  \toprule
+  Symbol & Definition \\
+  \midrule
+  $d_{ij}$ & Distance of arc $(i,j)$ in nautical miles \\
+  $w_{ij}$ & Mean cargo weight on arc $(i,j)$ in metric tonnes \\
+  $f_{ij,v}$ & Fuel consumption rate on arc $(i,j)$ at speed $v$ in kg/nm \\
+  $B_{ij}$ & Time budget for arc $(i,j)$ in hours (per-arc schedule constraint) \\
+  $T_{\max}$ & Maximum global cycle time in hours (flexible schedule variant) \\
+  $p_f$ & Fuel price in EUR/tonne \\
+  $p_c$ & CO$_2$ price in EUR/tonne \\
+  $\ciithr$ & CII threshold (upper bound on attained CII) in g/GT$\cdot$nm \\
+  $\mathrm{GT}$ & Gross tonnage of the vessel \\
+  $f_i$ & Ice-class correction factor \\
+  $f_m$ & Capacity correction factor (1.05 for RoRo non-vehicle carrier) \\
+  $CF$ & CO$_2$ conversion factor in kg CO$_2$/kg fuel \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Derived Quantities}
+\label{app:notation:derived}
+
+\begin{table}[h]
+\centering
+\caption{Derived quantities and intermediate expressions}
+\label{tab:notation_derived}
+\begin{tabular}{lp{9cm}}
+  \toprule
+  Expression & Definition \\
+  \midrule
+  $C_{\mathrm{eff}} = f_i \cdot f_m \cdot \mathrm{GT}$ & Effective capacity in the CII denominator \\
+  $D_T = \sum_{(i,j) \in \setA} d_{ij}$ & Total distance sailed per loop (nm); constant \\
+  $\mathrm{FC}_{ij,v} = f_{ij,v} \cdot d_{ij}$ & Fuel consumed on arc $(i,j)$ at speed $v$ (kg) \\
+  $\mathrm{CO}_{2,ij,v} = \mathrm{FC}_{ij,v} \cdot CF / 1000$ & CO$_2$ emitted on arc $(i,j)$ at speed $v$ (t) \\
+  $t_{ij,v} = d_{ij}/v$ & Transit time on arc $(i,j)$ at speed $v$ (hours) \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Fuel Polynomial}
+\label{app:notation:polynomial}
+
+The fuel consumption rate $f_{ij,v}$ is computed from the SCA vessel
+polynomial:
+\begin{equation}
+  f_{ij,v} = \sum_{k=0}^{6} a_k^{(\ell)} \cdot v^k,
+  \label{eq:fuel_poly_app}
+\end{equation}
+where the coefficients $a_k^{(\ell)}$ depend on the loading condition
+$\ell \in \{\text{light, medium, full}\}$ and are provided by SCA Logistics.
+The polynomial is valid for $v \in [10, 16]$~kn and exhibits a
+local non-monotonicity at 12--13~kn in the light-load regime.
+
+For arcs where the mean cargo weight $w_{ij}$ does not match a single
+loading condition, the model interpolates between adjacent polynomial
+coefficients using linear blending on cargo fraction:
+\begin{equation}
+  f_{ij,v} = (1-\lambda) \cdot f_v^{(\ell)} + \lambda \cdot f_v^{(\ell+1)},
+  \quad \lambda = \frac{w_{ij} - w^{(\ell)}}{w^{(\ell+1)} - w^{(\ell)}}.
+\end{equation}
+
+\subsection{Linearisation of the CII Constraint}
+\label{app:notation:linearisation}
+
+The attained \CII{} constraint requires:
+\begin{equation}
+  \frac{\sum_{(i,j)} \sum_v x_{ij,v} \cdot \mathrm{CO}_{2,ij,v} \cdot 10^6}{C_{\mathrm{eff}} \cdot D_T} \leq \ciithr.
+  \label{eq:cii_constraint_app}
+\end{equation}
+
+Since $D_T$ is constant (the set of arcs and their distances do not depend
+on speed choices), multiplying both sides by $C_{\mathrm{eff}} \cdot D_T > 0$
+preserves the inequality direction and yields the linear constraint:
+\begin{equation}
+  \sum_{(i,j) \in \setA} \sum_{v \in \setV} x_{ij,v} \cdot \mathrm{CO}_{2,ij,v}
+  \leq \ciithr \cdot C_{\mathrm{eff}} \cdot D_T \cdot 10^{-6},
+  \label{eq:cii_linear_app}
+\end{equation}
+which is linear in the binary decision variables $x_{ij,v}$.  No
+auxiliary variables or big-M reformulations are required.

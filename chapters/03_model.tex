@@ -1,0 +1,293 @@
+% ============================================================
+%  Chapter 3 — Mathematical Model
+% ============================================================
+\section{Mathematical Model}
+\label{ch:model}
+
+This chapter develops the \MILP{} model for operational speed
+optimisation under \CII{} constraints. \Cref{sec:model:problem} describes
+the problem. \Cref{sec:model:notation} introduces the notation.
+\Cref{sec:model:base} presents the base formulation.
+\Cref{sec:model:flexible} describes the flexible schedule extension.
+\Cref{sec:model:fuel} specifies the fuel consumption model.
+\Cref{sec:model:cii} details the \CII{} constraint derivation.
+
+% ── 3.1 Problem description ───────────────────────────────────
+\subsection{Problem Description}
+\label{sec:model:problem}
+
+A single \RoRo{} vessel operates a cyclic service visiting a fixed set of
+ports. The vessel makes one port call at each port per cycle and must
+depart each port within a published time window. The operator selects a
+sailing speed for each voyage leg (arc) from a finite discrete set. The
+objective is to minimise total voyage cost --- comprising fuel cost and,
+where applicable, \ETS{} carbon cost --- subject to \CII{} compliance,
+schedule adherence, and physical speed limits.
+
+The model is a \MILP{} because speed is represented as a discrete
+variable (\ie{} an integer choice from a finite speed grid), while the
+\CII{} constraint introduces a ratio structure that is linearised by
+appropriate reformulation.
+
+% ── 3.2 Notation ──────────────────────────────────────────────
+\subsection{Notation}
+\label{sec:model:notation}
+
+\subsubsection{Sets}
+\label{sec:model:sets}
+
+\begin{itemize}
+  \item $\setN$: set of port nodes.
+  \item $\setA \subseteq \setN \times \setN$: set of directed arcs
+    $(i,j)$ representing voyage legs.
+  \item $\setV$: finite set of discrete speed levels (knots),
+    $\setV = \{v_{\min}, \ldots, v_{\max}\}$.
+\end{itemize}
+
+\subsubsection{Parameters}
+\label{sec:model:params}
+
+\begin{itemize}
+  \item $\dist$: sailing distance on arc $(i,j)$, in nautical miles.
+  \item $\cargo$: cargo (in tonnes) carried on arc $(i,j)$; fixed
+    exogenously at the mean observed load.
+  \item $\fuelrate$: fuel consumption on arc $(i,j)$ at speed $v$,
+    in kg/nm; pre-computed from the vessel's polynomial fuel curve
+    (see \cref{sec:model:fuel}).
+  \item $\budget$: maximum allowed transit time on arc $(i,j)$,
+    in hours; derived from the published port schedule.
+  \item $C_{\mathrm{fuel}}$: fuel price in \euro{}/tonne.
+  \item $C_{\mathrm{CO}_2}$: \ETS{} carbon price in \euro{}/kg\,CO$_2$.
+  \item $\gamma$: CO$_2$ emission factor (kg\,CO$_2$ per tonne of fuel).
+  \item $\ciithr$: \CII{} threshold in \gGTnm{}; scenario-specific
+    (see \cref{ch:scenarios}).
+  \item $\GT{}$: vessel gross tonnage.
+  \item $f_i, f_m$: \IMO{} correction factors for ice class and
+    capacity, respectively.
+\end{itemize}
+
+\subsubsection{Decision Variables}
+\label{sec:model:vars}
+
+\begin{equation}
+  \xvar \in \{0,1\} \quad \forall (i,j) \in \setA,\ v \in \setV
+  \label{eq:defx}
+\end{equation}
+
+$\xvar$ equals 1 if the vessel sails arc $(i,j)$ at speed $v$, and 0
+otherwise. Each arc must be sailed at exactly one speed.
+
+% ── 3.3 Base formulation ──────────────────────────────────────
+\subsection{Base Formulation (Fixed Schedule)}
+\label{sec:model:base}
+
+\subsubsection{Objective Function}
+\label{sec:model:obj}
+
+The objective minimises total voyage cost comprising fuel cost and
+\ETS{} carbon cost:
+
+\begin{equation}
+  \min \quad
+  \sum_{(i,j)\in\setA} \sum_{v\in\setV}
+    \xvar \cdot \dist \cdot \fuelrate
+    \cdot \left( \frac{C_{\mathrm{fuel}}}{1000}
+                 + \frac{C_{\mathrm{CO}_2} \cdot \gamma}{1000} \right)
+  \label{eq:obj}
+\end{equation}
+
+\noindent where the factor $1/1000$ converts kg to tonnes for fuel cost
+and accounts for units in the carbon cost term.
+
+\subsubsection{Constraints}
+\label{sec:model:constraints}
+
+\paragraph{Speed assignment.}
+Each arc is sailed at exactly one speed:
+
+\begin{equation}
+  \sum_{v \in \setV} \xvar = 1 \quad \forall (i,j) \in \setA
+  \label{eq:speedassign}
+\end{equation}
+
+\paragraph{Schedule (time budget) constraints.}
+The transit time on each arc must not exceed the published time window:
+
+\begin{equation}
+  \sum_{v \in \setV} \xvar \cdot \frac{\dist}{v} \leq \budget
+  \quad \forall (i,j) \in \setA
+  \label{eq:schedule}
+\end{equation}
+
+\paragraph{CII constraint.}
+The attained \CII{} must not exceed the scenario threshold
+$\ciithr$:
+
+\begin{equation}
+  \frac{\displaystyle\sum_{(i,j)\in\setA} \sum_{v\in\setV}
+          \xvar \cdot \dist \cdot \fuelrate \cdot \gamma}
+       {f_i \cdot f_m \cdot \GT \cdot
+        \displaystyle\sum_{(i,j)\in\setA} \sum_{v\in\setV}
+          \xvar \cdot \dist}
+  \leq \ciithr
+  \label{eq:cii_frac}
+\end{equation}
+
+Because the denominator of \cref{eq:cii_frac} depends on the decision
+variables, the constraint is non-linear as written. However, since
+$\sum_{v} \xvar = 1$ implies $\sum_{v} \xvar \cdot \dist = \dist$ for
+each arc, the total distance $D = \sum_{(i,j)} \dist$ is in fact
+\textit{constant} (independent of speed choices). The constraint
+therefore reduces to a linear form:
+
+\begin{equation}
+  \sum_{(i,j)\in\setA} \sum_{v\in\setV}
+    \xvar \cdot \dist \cdot \fuelrate \cdot \gamma
+  \leq \ciithr \cdot f_i \cdot f_m \cdot \GT \cdot D
+  \label{eq:cii_linear}
+\end{equation}
+
+\noindent \cref{eq:cii_linear} is a single linear inequality, keeping the
+overall model a \MILP{}.
+
+\paragraph{Integrality.}
+\begin{equation}
+  \xvar \in \{0,1\} \quad \forall (i,j) \in \setA,\ v \in \setV
+  \label{eq:integrality}
+\end{equation}
+
+\subsubsection{Complete Formulation}
+\label{sec:model:complete}
+
+The complete base model is:
+
+\begin{align}
+  \min \quad & \sum_{(i,j)\in\setA} \sum_{v\in\setV}
+    \xvar \cdot \dist \cdot \fuelrate
+    \cdot \left( \frac{C_{\mathrm{fuel}} + C_{\mathrm{CO}_2}\cdot\gamma}
+                      {1000} \right)
+    \tag{\ref{eq:obj}} \\
+  \text{s.t.} \quad
+  & \sum_{v\in\setV} \xvar = 1
+    & \forall (i,j)\in\setA
+    \tag{\ref{eq:speedassign}} \\
+  & \sum_{v\in\setV} \xvar \cdot \frac{\dist}{v} \leq \budget
+    & \forall (i,j)\in\setA
+    \tag{\ref{eq:schedule}} \\
+  & \sum_{(i,j)\in\setA} \sum_{v\in\setV}
+      \xvar \cdot \dist \cdot \fuelrate \cdot \gamma
+    \leq \ciithr \cdot f_i \cdot f_m \cdot \GT \cdot D
+    \tag{\ref{eq:cii_linear}} \\
+  & \xvar \in \{0,1\}
+    & \forall (i,j)\in\setA,\ v\in\setV
+    \tag{\ref{eq:integrality}}
+\end{align}
+
+% ── 3.4 Flexible schedule extension ───────────────────────────
+\subsection{Flexible Schedule Extension}
+\label{sec:model:flexible}
+
+In the fixed-schedule formulation (\cref{sec:model:base}), per-arc time
+budgets $\budget$ enforce the published timetable. In the flexible
+schedule variant (Scenario~S5), the per-arc budget constraints
+\eqref{eq:schedule} are replaced by a single \textit{global cycle-time
+cap}:
+
+\begin{equation}
+  \sum_{(i,j)\in\setA} \sum_{v\in\setV} \xvar \cdot \frac{\dist}{v}
+  \leq T_{\max}
+  \label{eq:cycle_cap}
+\end{equation}
+
+\noindent where $T_{\max}$ is the maximum allowable total transit time
+per complete loop. This relaxation allows the vessel to redistribute
+sailing time freely across legs, enabling further slow-steaming on
+legs that previously had tight time budgets.
+
+% ── 3.5 Fuel consumption model ────────────────────────────────
+\subsection{Fuel Consumption Model}
+\label{sec:model:fuel}
+
+The fuel consumption rate $\fuelrate$ (kg/nm) on arc $(i,j)$ at speed
+$v$ is pre-computed from a vessel-specific sixth-degree polynomial
+calibrated to three loading conditions:
+
+\begin{equation}
+  f^{(c)}(v) = \sum_{k=0}^{6} a_k^{(c)} \cdot v^k,
+  \quad c \in \{\text{light},\ \text{medium},\ \text{full}\}
+  \label{eq:poly_fuel}
+\end{equation}
+
+\noindent where the coefficients $a_k^{(c)}$ are derived from SCA's
+Bunker Consumption data. For a given cargo load $\cargo$, the fuel rate
+is linearly interpolated between adjacent loading conditions. The
+polynomials are valid over the operational speed range
+$[v_{\min}, v_{\max}] = [10, 16]$ knots.
+
+\begin{remark}
+  The sixth-degree polynomial exhibits a non-monotonic relationship
+  between 12 and 13~knots for all three loading conditions. While the
+  overall trend is increasing (higher speed $\Rightarrow$ more fuel),
+  the polynomial dips slightly at 12~kn relative to 13~kn. This is
+  a known artefact of polynomial fitting to empirical data and is
+  acknowledged as a modelling limitation
+  (see \cref{sec:disc:limitations}).
+\end{remark}
+
+% ── 3.6 CII constraint derivation ─────────────────────────────
+\subsection{CII Constraint Derivation for RoRo Vessels}
+\label{sec:model:cii}
+
+This section documents the correct derivation of the \CII{} constraint
+for a \RoRo{} vessel, which differs from formulations in the literature
+that use deadweight tonnage or transport work.
+
+\subsubsection{Emission Computation}
+
+Total CO$_2$ emissions on a voyage are:
+
+\begin{equation}
+  E = \sum_{(i,j)\in\setA} \sum_{v\in\setV}
+        \xvar \cdot \dist \cdot \fuelrate \cdot \gamma
+  \quad [\text{kg CO}_2]
+  \label{eq:total_co2}
+\end{equation}
+
+\noindent where $\gamma = 3{,}114$ kg\,CO$_2$/t\,fuel for heavy fuel
+oil (HFO), following \IMO{} guidelines \parencite{mepc336}.
+
+\subsubsection{CII Denominator}
+
+For a \RoRo{} vessel, the \CII{} denominator is:
+
+\begin{equation}
+  \Omega = f_i \cdot f_m \cdot \GT \cdot D
+  \label{eq:cii_denom}
+\end{equation}
+
+\noindent For M/V~Obbola: $\GT = 19{,}918$, $f_i = 1.0$,
+$f_m = 1.05$ (ice class 1A correction), giving
+$\Omega / D = 20{,}913.9$ GT per nautical mile.
+
+\subsubsection{Attained CII}
+
+\begin{equation}
+  \ciiatt = \frac{E \times 1000}{\Omega}
+  \quad [\text{g CO}_2 / (\GT \cdot \text{nm})]
+  \label{eq:cii_attained}
+\end{equation}
+
+\noindent The factor of 1000 converts kg to grams.
+
+\subsubsection{Relationship to Transport Work Formulations}
+
+Common formulations in the literature define the \CII{} denominator as
+deadweight tonnage times nautical miles, \ie{}
+$\Omega_{\mathrm{DWT}} = \mathrm{DWT} \times D$. For \RoRo{} vessels,
+this is incorrect under \IMO{} regulation. Using
+$\mathrm{DWT} = 11{,}446$~t for M/V~Obbola in place of
+$f_i \cdot f_m \cdot \GT = 20{,}914$ would overestimate the attained
+\CII{} by a factor of $20{,}914 / 11{,}446 \approx 1.83$, leading to
+an incorrect regulatory assessment. This distinction is a key finding
+of this thesis and has been corrected relative to earlier model
+versions.

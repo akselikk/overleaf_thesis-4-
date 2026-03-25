@@ -1,0 +1,167 @@
+% ============================================================
+%  Appendix A — CII Regulatory Framework
+% ============================================================
+\section{CII Regulatory Framework}
+\label{app:cii}
+
+\subsection{Regulatory Background}
+\label{app:cii:background}
+
+The Carbon Intensity Indicator (\CII{}) was introduced by the International
+Maritime Organization (\IMO{}) under MARPOL Annex VI, entering into force on
+1 November 2022 and applying from 1 January 2023.  It forms part of the
+short-term measures in the IMO Initial GHG Strategy and the revised 2023 GHG
+Strategy targeting net-zero emissions by 2050.
+
+Under \CII{}, all ships of 5{,}000 GT and above engaged in international
+voyages must:
+\begin{enumerate}
+  \item Calculate their \emph{attained \CII{}} annually from reported fuel
+    consumption and distance data;
+  \item Compare it to the \emph{required \CII{}} derived from a
+    ship-type-specific reference line;
+  \item Receive a rating (A--E) based on their position relative to rating
+    boundary multipliers;
+  \item Implement a corrective action plan if rated D or E.
+\end{enumerate}
+
+\subsection{CII Formula by Ship Type}
+\label{app:cii:formula}
+
+The attained \CII{} is computed as:
+\begin{equation}
+  \ciiatt = \frac{\sum_j CF_j \cdot FC_j}{\text{Capacity} \times D_T},
+  \label{eq:cii_general}
+\end{equation}
+where $CF_j$ is the CO$_2$ conversion factor for fuel type $j$, $FC_j$ is
+the mass of fuel $j$ consumed (tonnes), and $D_T$ is the total distance
+sailed (nautical miles).  The \emph{Capacity} denominator is
+ship-type-specific:
+
+\begin{table}[h]
+\centering
+\caption{Capacity parameter by ship type for CII calculation
+         (MEPC.352(78) / MEPC.354(78))}
+\label{tab:cii_capacity}
+\begin{tabular}{ll}
+  \toprule
+  Ship type & Capacity \\
+  \midrule
+  Bulk carrier & DWT \\
+  Tanker        & DWT \\
+  Container ship & DWT \\
+  General cargo  & DWT \\
+  \textbf{Ro-Ro cargo (vehicle carrier)} & \textbf{GT} \\
+  \textbf{Ro-Ro cargo (non-vehicle carrier)} & \textbf{GT} \\
+  \textbf{Ro-Ro passenger} & \textbf{GT} \\
+  Cruise passenger ship & GT \\
+  LNG carrier  & DWT \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+For \RoRo{} cargo vessels (non-vehicle carrier), the operative formula is:
+\begin{equation}
+  \ciiatt = \frac{FC \times CF}{f_i \times f_m \times \GT \times D_T},
+  \label{eq:cii_roro}
+\end{equation}
+where $f_i$ and $f_m$ are the ice-class and capacity correction factors
+respectively (\cref{tab:cii_corrections}).
+
+\begin{table}[h]
+\centering
+\caption{Correction factors for RoRo CII (MEPC.352(78))}
+\label{tab:cii_corrections}
+\begin{tabular}{lll}
+  \toprule
+  Factor & Definition & Value for M/V Obbola \\
+  \midrule
+  $f_i$ & Ice-class factor (1.0 for non-ice class) & 1.0 \\
+  $f_m$ & Capacity correction (1.05 for RoRo non-vehicle) & 1.05 \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Required CII and Rating Boundaries}
+\label{app:cii:required}
+
+The required \CII{} for year $Y$ is given by:
+\begin{equation}
+  \ciireq(Y) = \ciireq(2019) \times (1 - r_Y),
+  \label{eq:cii_required}
+\end{equation}
+where $r_Y$ is the cumulative reduction factor for year $Y$ relative to
+the 2019 reference.  For \RoRo{} non-vehicle carriers, the required CII
+reference value is computed from the ship-type-specific regression:
+\begin{equation}
+  \ciireq(2019) = a \times C^{-c},
+  \label{eq:cii_ref}
+\end{equation}
+with parameters $a$ and $c$ from MEPC.352(78) Table 1 and $C$ being the
+capacity (\GT{} for \RoRo{}).
+
+The five rating bands are defined by four boundary multipliers
+$d_1 < d_2 < 1 < d_3 < d_4$ applied to the required \CII{}:
+
+\begin{table}[h]
+\centering
+\caption{Rating boundary multipliers for RoRo cargo ships (non-vehicle
+         carrier), from MEPC.339(76)}
+\label{tab:rating_boundaries}
+\begin{tabular}{ccc}
+  \toprule
+  Rating & Condition & Multiplier \\
+  \midrule
+  A & $\ciiatt < d_1 \times \ciireq$ & $d_1 = 0.76$ \\
+  B & $d_1 \leq \ciiatt < d_2 \times \ciireq$ & $d_2 = 0.89$ \\
+  C & $d_2 \leq \ciiatt < d_3 \times \ciireq$ & $d_3 = 1.08$ \\
+  D & $d_3 \leq \ciiatt < d_4 \times \ciireq$ & $d_4 = 1.27$ \\
+  E & $\ciiatt \geq d_4 \times \ciireq$ & --- \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+Note that the multipliers in \cref{tab:rating_boundaries} are
+\RoRo{}-specific.  Generic vessel types use different multipliers
+(e.g., $d_1 = 0.82$, $d_3 = 1.06$ for bulk carriers); applying generic
+values to a \RoRo{} vessel would produce incorrect ratings.
+
+\subsection{Confirmed and Projected Reduction Factors}
+\label{app:cii:reduction}
+
+\begin{table}[h]
+\centering
+\caption{CII reduction factors --- confirmed and projected}
+\label{tab:reduction_factors}
+\begin{tabular}{ccl}
+  \toprule
+  Year & Reduction (vs.\ 2019) & Status \\
+  \midrule
+  2023 & 5\,\%  & Confirmed (MEPC.338(76)) \\
+  2024 & 7\,\%  & Confirmed \\
+  2025 & 9\,\%  & Confirmed \\
+  2026 & 11\,\% & Confirmed \\
+  2027--2030 & TBD & Pending MEPC 83/84 \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+For scenarios S4 and S4b, this thesis assumes a 31\,\% reduction factor
+for 2030, consistent with the IMO 2023 GHG Strategy's indicative 40\,\%
+fleet-wide ambition and extrapolating the confirmed annual trajectory.
+This is a scenario assumption and not a confirmed regulatory requirement.
+
+\subsection{EU MRV Reporting and Data Collection}
+\label{app:cii:mrv}
+
+The EU Monitoring, Reporting and Verification (MRV) Regulation
+(EU~2015/757, amended by EU~2023/957) requires ships above 5{,}000 GT
+calling at EU ports to report per-voyage fuel consumption, CO$_2$
+emissions, and distance sailed.  The reported data are submitted to the
+THETIS-MRV platform and published annually.
+
+For M/V Obbola, the EU MRV observation period covers December 2021
+through August 2022, comprising 153 voyage legs.  The total reported
+CO$_2$ emission is 16{,}342.18~t (15{,}727.27~t HFO + 614.91~t MGO),
+yielding an actual 2022 attained \CII{} of 11.430253~\gGTnm{}
+(Rating~B).

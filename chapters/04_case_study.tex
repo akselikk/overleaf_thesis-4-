@@ -1,0 +1,220 @@
+% ============================================================
+%  Chapter 4 — Case Study: M/V Obbola and the Baltic Sea Loop
+% ============================================================
+\section{Case Study: M/V Obbola and the Baltic Sea Loop}
+\label{ch:casestudy}
+
+% ── 4.1 Vessel description ────────────────────────────────────
+\subsection{Vessel Description}
+\label{sec:case:vessel}
+
+M/V~Obbola is a \RoRo{} vessel operated by SCA Logistics on a cyclic
+Baltic Sea service. Key technical parameters are summarised in
+\cref{tab:vessel_params}.
+
+\begin{table}[h]
+\centering
+\caption{M/V Obbola — principal technical parameters}
+\label{tab:vessel_params}
+\begin{tabular}{lrl}
+  \toprule
+  Parameter & Value & Unit \\
+  \midrule
+  IMO number            & 9\,395\,343 & --- \\
+  Vessel type           & \RoRo{}     & --- \\
+  Gross Tonnage (\GT{}) & 19\,918     & GT \\
+  Deadweight Tonnage    & 11\,446     & t \\
+  Cargo capacity        & 9\,730      & t \\
+  Length (L\textsubscript{pp}) & 160.4 & m \\
+  Breadth               & 23.5        & m \\
+  Summer draught        & 6.7         & m \\
+  Ice class             & 1A          & --- \\
+  $f_m$ correction      & 1.05        & --- \\
+  $f_i$ correction      & 1.00        & --- \\
+  Effective capacity ($f_i \cdot f_m \cdot \GT{}$)
+                        & 20\,913.9   & GT \\
+  Design speed (summer, light) & 16.0 & kn \\
+  Fuel type             & HFO         & --- \\
+  CO$_2$ emission factor $\gamma$ & 3\,114 & kg/t\textsubscript{fuel} \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+% ── 4.2 CII parameterisation ──────────────────────────────────
+\subsection{CII Parameterisation}
+\label{sec:case:cii}
+
+The required \CII{} for M/V~Obbola is computed from the \IMO{}
+reference formula for \RoRo{} vessels:
+
+\begin{equation}
+  \ciireq^{(Y)} = a \cdot \GT^{-c} \cdot (1 - r^{(Y)})
+  \label{eq:cii_required}
+\end{equation}
+
+\noindent with $a = 1967$, $c = 0.485$ \parencite{mepc336}, giving a
+reference value $\ciireq^{\mathrm{ref}} = 16.17$~\gGTnm{}.
+The year-specific required \CII{} values after applying the annual
+reduction factors $r^{(Y)}$ are given in \cref{tab:cii_required}.
+
+\begin{table}[h]
+\centering
+\caption{Required CII and scenario thresholds for M/V Obbola}
+\label{tab:cii_required}
+\begin{tabular}{lrrrr}
+  \toprule
+  Year & {Reduction (\%)} & {Required CII} & {B boundary ($\times 0.89$)}
+       & {C boundary ($\times 1.08$)} \\
+  \midrule
+  2023 & 5.0  & 15.3601 & 13.6705 & 16.5889 \\
+  2024 & 7.0  & 15.0367 & 13.3827 & 16.2397 \\
+  2025 & 9.0  & 14.7134 & 13.0949 & 15.8904 \\
+  2026 & 11.0 & 14.3900 & 12.8071 & 15.5412 \\
+  2030 & 31.0 & 11.1563 & 9.9291  & 12.0488 \\
+  \bottomrule
+\end{tabular}
+\smallskip\\
+{\footnotesize Rating boundaries use RoRo-specific multipliers from
+MEPC.339(76): $d_1=0.76$, $d_2=0.89$, $d_3=1.08$, $d_4=1.27$.}
+\end{table}
+
+% ── 4.3 Route and network ─────────────────────────────────────
+\subsection{Baltic Sea Loop}
+\label{sec:case:route}
+
+M/V~Obbola operates a cyclic Baltic Sea service on behalf of SCA, calling
+at Swedish forestry and paper-industry ports before transiting to northern
+European hub ports.  The service connects SCA's Swedish production sites ---
+Umeå (SEUME), Sundsvall (SETUN / SESDL), Iggesund (SEIGG), Mälarhamn
+(SEMMA), Helsingborg (SEHLD / SEHEL), and Oxelösund (SEOXE) --- with
+continental and UK ports at Kiel (DEKEL), Rotterdam (NLRTM), and Tilbury
+(GBTIL).  The loop is completed approximately every three weeks
+(observed mean cycle time approximately 935~h across arcs), corresponding
+to roughly 17 complete loops per calendar year.
+
+The EU \MRV{} dataset for December 2021 -- August 2022 contains 153
+individual voyage legs spanning 25 unique arc types (origin--destination
+port pairs) before filtering, of which 22 pass the minimum observation
+threshold ($n \geq 2$).  The total observed distance across these arcs
+is 26{,}575~nm, and the per-loop distance used in the model
+(the expected total distance for one complete service cycle)
+is approximately 10{,}540~nm.  \Cref{fig:route_map} illustrates the
+network topology.
+
+\begin{figure}[h]
+  \centering
+  % Insert: route map of the Baltic Sea loop (PNG/PDF)
+  % Placeholder — replace \fbox with \includegraphics{Graphics/route_map}
+  % once the figure is generated.
+  \fbox{\parbox{0.85\textwidth}{\centering\vspace{2cm}
+        \textit{Figure: Baltic Sea loop --- M/V Obbola service network.}\\
+        \smallskip
+        Ports: SEUME (Umeå), SETUN/SESDL (Sundsvall), SEIGG (Iggesund),\\
+        SEMMA (Mälarhamn), SEHLD/SEHEL (Helsingborg), SEOXE (Oxelösund),\\
+        DEKEL (Kiel), NLRTM (Rotterdam), GBTIL (Tilbury).
+        \vspace{2cm}}}
+  \caption{Baltic Sea loop operated by M/V~Obbola (SCA Logistics).
+           Solid arrows indicate the primary service arcs; dashed arrows
+           indicate alternative routing options observed in the EU \MRV{} data.}
+  \label{fig:route_map}
+\end{figure}
+
+% ── 4.4 EU MRV data ───────────────────────────────────────────
+\subsection{EU MRV Operational Data}
+\label{sec:case:mrv}
+
+EU \MRV{} voyage data for M/V~Obbola covering December 2021 through
+August 2022 were used to calibrate the network and validate the model.
+The dataset comprises 153 individual voyage legs across 22 unique arc
+types (after applying a minimum observation filter of $n \geq 2$).
+
+\begin{table}[h]
+\centering
+\caption{EU MRV dataset summary}
+\label{tab:mrv_summary}
+\begin{tabular}{lr}
+  \toprule
+  Item & Value \\
+  \midrule
+  Reporting period & Dec 2021 -- Aug 2022 \\
+  Total voyage legs & 153 \\
+  Unique arc types ($n \geq 2$) & 22 \\
+  Total distance sailed & 26\,575 nm \\
+  Total CO$_2$ reported & 6\,352.8 t \\
+  Attained CII (2022, reported) & 11.43 g/GT$\cdot$nm \\
+  IMO CII rating (2022) & B \\
+  Mean cargo per leg & 50.8\% capacity \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+% ── 4.5 Schedule and time budgets ─────────────────────────────
+\subsection{Schedule and Time Budgets}
+\label{sec:case:schedule}
+
+Per-arc time budgets $\budget$ are derived from the EU \MRV{} data as:
+
+\begin{equation}
+  \budget = \bar{t}^{\mathrm{transit}}_{ij}
+            + \bar{t}^{\mathrm{wait}}_{ij}
+  \label{eq:budget_def}
+\end{equation}
+
+\noindent where $\bar{t}^{\mathrm{transit}}$ is the mean observed transit
+time and $\bar{t}^{\mathrm{wait}}$ is the mean observed port waiting time
+at the arrival port. This budget represents the maximum time available
+before the vessel must depart the next port on the published schedule.
+
+Three arcs have particularly tight budgets that force high minimum speeds:
+
+\begin{table}[h]
+\centering
+\caption{Binding schedule constraints — bottleneck arcs}
+\label{tab:bottleneck_arcs}
+\begin{tabular}{lrrrr}
+  \toprule
+  Arc & {Distance (nm)} & {Budget (h)} & {Min speed (kn, continuous)}
+      & {Min speed (kn, grid)} \\
+  \midrule
+  SEMMA $\to$ SEHLD & 692 & 48.0 & 14.41 & 15 \\
+  SEMMA $\to$ SEUME & 690 & 48.0 & 14.37 & 15 \\
+  SEIGG $\to$ DEKEL & 659 & 48.0 & 13.74 & 14 \\
+  SETUN $\to$ NLRTM & 1047 & 76.5 & 13.69 & 14 \\
+  \bottomrule
+\end{tabular}
+\smallskip\\
+{\footnotesize These arcs correspond to published 48-hour overnight
+schedule windows. They define the minimum achievable CII under the
+fixed schedule.}
+\end{table}
+
+% ── 4.6 Model validation ──────────────────────────────────────
+\subsection{Model Validation}
+\label{sec:case:validation}
+
+The model is validated in Scenario~S1 (as-is replay) by comparing the
+attained \CII{} predicted by the model against the auditor-reported
+value from the EU \MRV{} dataset. Using mean observed speeds on each arc,
+the model predicts an attained \CII{} of 11.29~\gGTnm{}, compared to
+the reported value of 11.43~\gGTnm{} --- a relative error of 1.2\%.
+Both values correspond to a Rating~B under the RoRo-specific boundary
+multipliers from MEPC.339(76). This close agreement validates the
+fuel consumption model and network parameterisation.
+
+The three sources of discrepancy enumerated above (speed rounding, per-arc
+mean cargo, exclusion of port auxiliary consumption) are all conservative in
+the same direction: they collectively produce a slight underestimate of
+emissions.  A 1.2\,\% relative error is well within the range considered
+acceptable for operational planning models calibrated to aggregate MRV data;
+\textcite{psaraftis2013speed} note that fuel model errors of 5--15\,\% are
+common in fleet-level analyses, making sub-2\,\% accuracy at the route level
+highly satisfactory.
+
+The dominant contributor to the residual discrepancy is the exclusion of
+port-side auxiliary engine consumption.  Auxiliary power draw during loading
+and unloading operations is recorded in the MRV dataset under the port call
+emission category but is not captured by the underway fuel model, which covers
+only propulsion fuel.  Were auxiliary consumption included, the model's
+predicted \CII{} would move closer to the reported value.  Given that this
+thesis focuses on the operational levers available for underway speed
+optimisation, the exclusion is methodologically appropriate.
